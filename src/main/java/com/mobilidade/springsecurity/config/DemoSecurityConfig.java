@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 //import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.core.userdetails.User.UserBuilder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +44,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginProcessingUrl("/authenticateTheUser")
 				.permitAll()
 			.and()
-			.logout().permitAll()
+			.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/access-denied");
 		
