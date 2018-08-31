@@ -1,7 +1,11 @@
 package com.mobilidade.springsecurity.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.mobilidade.entidade.Pessoa;
+import com.mobilidade.repos.PessoaRepository;
 
 @Controller
 public class LoginController {
@@ -23,7 +27,14 @@ public class LoginController {
 		return "access-denied";
 		
 	}
-	
+	// pagina de solicitacao de permuta
+	@GetMapping("/solicitar-permuta")
+	public String showPermutaForm() {
+		
+		return "solicitacao-permuta";
+		
+	}
+		
 }
 
 

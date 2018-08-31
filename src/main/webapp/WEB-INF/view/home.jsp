@@ -18,7 +18,7 @@
       <a class="navbar-brand" href="#">Mobilidade de RH</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a href="${pageContext.request.contextPath}/">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mobilidade<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#">Candidatura</a></li>
@@ -29,7 +29,7 @@
       </li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Permuta<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Solicitação de permuta</a></li>
+          <li><a href="${pageContext.request.contextPath}/solicitar-permuta">Solicitação de permuta</a></li>
           <security:authorize access="hasRole('ADMIN')"><li><a href="#">Gerenciamento da permuta</a></li></security:authorize>
         </ul>
       </li>
