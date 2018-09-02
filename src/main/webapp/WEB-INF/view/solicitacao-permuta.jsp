@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,14 +63,15 @@
 				<label class="control-label col-sm-3" for="matricula">Matrícula:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="matricula"
-						placeholder="" name="matricula" value="${pessoa.matricula }" disabled>
+						placeholder="" name="matricula" value="${pessoa.matricula }"
+						disabled>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="nome">Nome:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="nome" placeholder=""
-						name="nome" value="${pessoa.nomePessoa }" disabled >
+						name="nome" value="${pessoa.nomePessoa }" disabled>
 				</div>
 			</div>
 			<div class="form-group">
@@ -83,7 +85,9 @@
 				<label class="control-label col-sm-3" for="unidade">Unidade:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="unidade" placeholder=""
-						name="unidade" value="${pessoa.componenteAdministrativo.unidade.nomeUnidade }" disabled>
+						name="unidade"
+						value="${pessoa.componenteAdministrativo.unidade.nomeUnidade }"
+						disabled>
 				</div>
 			</div>
 			<div class="form-group">
@@ -91,7 +95,9 @@
 					Administrativo:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="componente"
-						placeholder="" name="componente" value="${pessoa.componenteAdministrativo.nomeComponente }" disabled>
+						placeholder="" name="componente"
+						value="${pessoa.componenteAdministrativo.nomeComponente }"
+						disabled>
 				</div>
 			</div>
 			<div class="form-group">
@@ -102,24 +108,33 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-3" for="processo">Processo de Trabalho Atual:</label>
+				<label class="control-label col-sm-3" for="processo">Processo
+					de Trabalho Atual:</label>
 				<div class="col-sm-6">
 					<select class="form-control" id="processo" name="processo">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
+						<c:forEach items="${cadeiasValor}" var="processoTrabalho">
+							<c:choose>
+
+								<c:when test="${ cadeiaValorPreviamenteEscolhida == processoTrabalho.descricaoSubgrupo}">
+            							<option selected>${processoTrabalho.descricaoSubgrupo}</option>
+         						</c:when>
+         						<c:otherwise>
+            						<option>${processoTrabalho.descricaoSubgrupo}</option>
+         						</c:otherwise>
+							</c:choose>
+
+						</c:forEach>
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-3" for="motivo">Motivo Principal:</label>
+				<label class="control-label col-sm-3" for="motivo">Motivo
+					Principal:</label>
 				<div class="col-sm-6">
 					<select class="form-control" id="motivo" name="motivo">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
+						<c:forEach items="${motivos}" var="m">
+							<option>${m}</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>

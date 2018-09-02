@@ -1,14 +1,12 @@
 package com.mobilidade.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
+import com.mobilidade.entidade.CadeiaValorSubgrupo;
 import com.mobilidade.entidade.ComponenteAdministrativo;
 import com.mobilidade.entidade.Pessoa;
 import com.mobilidade.entidade.Praca;
@@ -83,6 +81,7 @@ public class PessoaDao {
 				.addAnnotatedClass(User.class)
 				.addAnnotatedClass(ComponenteAdministrativo.class)
 				.addAnnotatedClass(Unidade.class)
+				.addAnnotatedClass(CadeiaValorSubgrupo.class)
 				.buildSessionFactory();
 		Session session = fac.getCurrentSession();
 		

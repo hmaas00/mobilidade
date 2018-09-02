@@ -32,8 +32,17 @@ public class Pessoa {
 	@JoinColumn(name="componente_fk")
 	private ComponenteAdministrativo componenteAdministrativo;
 	
-	@Column(name="cod_cadeia_vlr_subgrupo_fk")
-	private int codCadeiaVlrSubgrupoFk;
+	
+	//relacao com cadeia valor subgrupo
+
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,
+			CascadeType.DETACH,CascadeType.REFRESH})
+	@JoinColumn(name="cod_cadeia_vlr_subgrupo_fk")
+	private CadeiaValorSubgrupo cadeiaValorSubgrupo;
+	
+	
+	//@Column(name="cod_cadeia_vlr_subgrupo_fk")
+	//private int codCadeiaVlrSubgrupoFk;
 	//@Column(name="cod_praca_fk")
 	//private int codPracaFk;
 	@Column(name="motivo_principal")
@@ -73,11 +82,12 @@ public class Pessoa {
 		this.cargo = cargo;
 	}
 
-	public int getCodCadeiaVlrSubgrupoFk() {
-		return codCadeiaVlrSubgrupoFk;
+	public CadeiaValorSubgrupo getCadeiaValorSubgrupo() {
+		
+		return cadeiaValorSubgrupo;
 	}
-	public void setCodCadeiaVlrSubgrupoFk(int codCadeiaVlrSubgrupoFk) {
-		this.codCadeiaVlrSubgrupoFk = codCadeiaVlrSubgrupoFk;
+	public void setCadeiaValorSubgrupo(CadeiaValorSubgrupo cadeiaValorSubgrupo) {
+		this.cadeiaValorSubgrupo = cadeiaValorSubgrupo;
 	}
 	/*
 	public int getCodPracaFk() {
@@ -135,7 +145,7 @@ public class Pessoa {
 	                "Matrícula: " + this.matricula + "\n"+
 	                "Fks:\n"+
 	                //"Cod praça: " + this.codPracaFk + "\n"+
-	                "Cod cadeia_vlr_subgrupo: " + this.codCadeiaVlrSubgrupoFk + "\n"+
+	                "Cod cadeia_vlr_subgrupo: " + this.getCadeiaValorSubgrupo() + "\n"+
 	                "Cod componente: " + this.componenteAdministrativo + "\n"
 	                ;
 	                
