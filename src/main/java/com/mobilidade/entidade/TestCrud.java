@@ -2,7 +2,7 @@ package com.mobilidade.entidade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mobilidade.repos.PessoaRepository;
+import com.mobilidade.dao.PessoaDao;
 
 public class TestCrud {
 

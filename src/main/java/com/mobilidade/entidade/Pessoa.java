@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +26,12 @@ public class Pessoa {
 	private String nomePessoa;
 	@Column(name="cargo")
 	private String cargo;
-	@Column(name="componente_fk")
-	private int componenteFk;
+	
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,
+			CascadeType.DETACH,CascadeType.REFRESH})
+	@JoinColumn(name="componente_fk")
+	private ComponenteAdministrativo componenteAdministrativo;
+	
 	@Column(name="cod_cadeia_vlr_subgrupo_fk")
 	private int codCadeiaVlrSubgrupoFk;
 	//@Column(name="cod_praca_fk")
@@ -46,6 +51,9 @@ public class Pessoa {
 	@JoinColumn(name="cod_praca_fk")
 	private Praca praca;
 	
+	//@OneToOne(mappedBy="pessoa")
+	//private User user;
+	
 	public int getIdPessoa() {
 		return idPessoa;
 	}
@@ -64,12 +72,7 @@ public class Pessoa {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-	public int getComponenteFk() {
-		return componenteFk;
-	}
-	public void setComponenteFk(int componenteFk) {
-		this.componenteFk = componenteFk;
-	}
+
 	public int getCodCadeiaVlrSubgrupoFk() {
 		return codCadeiaVlrSubgrupoFk;
 	}
@@ -114,6 +117,14 @@ public class Pessoa {
 	public void setPraca(Praca praca) {
 		this.praca = praca;
 	}
+	
+	public ComponenteAdministrativo getComponenteAdministrativo() {
+		return componenteAdministrativo;
+	}
+	public void setComponenteAdministrativo(ComponenteAdministrativo componenteAdministrativo) {
+		this.componenteAdministrativo = componenteAdministrativo;
+	}
+	//to string
 	 public String toString() {
 	        return "Id: " + this.idPessoa + "\n" +
 	        		"Nome: " + this.nomePessoa + "\n"+
@@ -125,7 +136,7 @@ public class Pessoa {
 	                "Fks:\n"+
 	                //"Cod praça: " + this.codPracaFk + "\n"+
 	                "Cod cadeia_vlr_subgrupo: " + this.codCadeiaVlrSubgrupoFk + "\n"+
-	                "Cod componente: " + this.componenteFk + "\n"
+	                "Cod componente: " + this.componenteAdministrativo + "\n"
 	                ;
 	                
 	    }

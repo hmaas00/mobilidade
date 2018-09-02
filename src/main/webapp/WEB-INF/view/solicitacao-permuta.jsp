@@ -62,28 +62,28 @@
 				<label class="control-label col-sm-3" for="matricula">Matrícula:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="matricula"
-						placeholder="" name="matricula">
+						placeholder="" name="matricula" value="${pessoa.matricula }" disabled>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="nome">Nome:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="nome" placeholder=""
-						name="nome">
+						name="nome" value="${pessoa.nomePessoa }" disabled >
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="cargo">Cargo:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="cargo" placeholder=""
-						name="cargo">
+						name="cargo" value="${pessoa.cargo }" disabled>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="unidade">Unidade:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="unidade" placeholder=""
-						name="unidade">
+						name="unidade" value="${pessoa.componenteAdministrativo.unidade.nomeUnidade }" disabled>
 				</div>
 			</div>
 			<div class="form-group">
@@ -91,14 +91,14 @@
 					Administrativo:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="componente"
-						placeholder="" name="componente">
+						placeholder="" name="componente" value="${pessoa.componenteAdministrativo.nomeComponente }" disabled>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="praca">Praça:</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="praca" placeholder=""
-						name="praca">
+						name="praca" value="${pessoa.praca.nomePraca }" disabled>
 				</div>
 			</div>
 			<div class="form-group">

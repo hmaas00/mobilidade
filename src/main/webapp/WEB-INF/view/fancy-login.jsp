@@ -31,7 +31,7 @@
 			<div class="panel panel-info">
 
 				<div class="panel-heading">
-					<div class="panel-title">Sign In</div>
+					<div class="panel-title">Sign In - Mobilidade de RH</div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
@@ -50,7 +50,7 @@
 									<c:if test="${param.error != null}">
 										
 										<div class="alert alert-danger col-xs-offset-1 col-xs-10">
-											Invalid username and password.
+											Usuário ou senha inválidos.
 										</div>
 		
 									</c:if>
@@ -60,7 +60,7 @@
 									<c:if test="${param.logout != null}">
 										            
 										<div class="alert alert-success col-xs-offset-1 col-xs-10">
-											You have been logged out.
+											Logout com sucesso!
 										</div>
 								    
 									</c:if>
@@ -73,14 +73,14 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
 							
-							<input type="text" name="username" placeholder="username" class="form-control">
+							<input type="text" name="username" placeholder="usuário" class="form-control">
 						</div>
 
 						<!-- Password -->
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> 
 							
-							<input type="password" name="password" placeholder="password" class="form-control" >
+							<input type="password" name="password" placeholder="senha" class="form-control" >
 						</div>
 
 						<!-- Login/Submit Button -->
