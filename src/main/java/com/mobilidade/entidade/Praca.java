@@ -33,6 +33,12 @@ public class Praca {
 					CascadeType.DETACH,CascadeType.REFRESH})
 	private List<Pessoa> listPessoa;
 	
+	//relação com solicitacoes de permuta
+		@OneToMany(mappedBy="praca",
+				cascade= {CascadeType.PERSIST,CascadeType.MERGE,
+						CascadeType.DETACH,CascadeType.REFRESH})
+		private List<SolicitacaoPermuta> listSolicitacaoPermuta;
+	
 	public int getIdPraca() {
 		return idPraca;
 	}
@@ -55,5 +61,13 @@ public class Praca {
 	public String toString() {
 		return "Praça: " + this.nomePraca + " código: " + this.idPraca;
 	}
+	public List<SolicitacaoPermuta> getListSolicitacaoPermuta() {
+		return listSolicitacaoPermuta;
+	}
+	public void setListSolicitacaoPermuta(List<SolicitacaoPermuta> listSolicitacaoPermuta) {
+		this.listSolicitacaoPermuta = listSolicitacaoPermuta;
+	}
+	
+	
 
 }

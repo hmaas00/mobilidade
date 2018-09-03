@@ -1,5 +1,7 @@
 package com.mobilidade.entidade;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -62,6 +65,13 @@ public class Pessoa {
 	
 	//@OneToOne(mappedBy="pessoa")
 	//private User user;
+	
+	//solicitacoes de permuta
+	@OneToMany(mappedBy="pessoa",
+			cascade= {CascadeType.PERSIST,CascadeType.MERGE,
+					CascadeType.DETACH,CascadeType.REFRESH})
+	private List<SolicitacaoPermuta> listSolicitacaoPermuta;
+	
 	
 	public int getIdPessoa() {
 		return idPessoa;
@@ -133,6 +143,14 @@ public class Pessoa {
 	}
 	public void setComponenteAdministrativo(ComponenteAdministrativo componenteAdministrativo) {
 		this.componenteAdministrativo = componenteAdministrativo;
+	}
+	
+	
+	public List<SolicitacaoPermuta> getListSolicitacaoPermuta() {
+		return listSolicitacaoPermuta;
+	}
+	public void setListSolicitacaoPermuta(List<SolicitacaoPermuta> listSolicitacaoPermuta) {
+		this.listSolicitacaoPermuta = listSolicitacaoPermuta;
 	}
 	//to string
 	 public String toString() {

@@ -36,6 +36,12 @@ public class CadeiaValorSubgrupo {
 			cascade= {CascadeType.PERSIST,CascadeType.MERGE,
 					CascadeType.DETACH,CascadeType.REFRESH})
 	private List<Pessoa> listPessoa;
+	
+	//relação com solicitacao de permuta
+		@OneToMany(mappedBy="cadeiaValorSubgrupo",
+				cascade= {CascadeType.PERSIST,CascadeType.MERGE,
+						CascadeType.DETACH,CascadeType.REFRESH})
+		private List<SolicitacaoPermuta> listSolicitacaoPermuta ;
 
 	public int getIdCadeiaValorSubgrupo() {
 		return idCadeiaValorSubgrupo;
@@ -61,7 +67,16 @@ public class CadeiaValorSubgrupo {
 	public void setListPessoa(List<Pessoa> listPessoa) {
 		this.listPessoa = listPessoa;
 	}
-	
+
+	public List<SolicitacaoPermuta> getListSolicitacaoPermuta() {
+		return listSolicitacaoPermuta;
+	}
+
+	public void setListSolicitacaoPermuta(List<SolicitacaoPermuta> listSolicitacaoPermuta) {
+		this.listSolicitacaoPermuta = listSolicitacaoPermuta;
+	}
+
+	//to string
 	public String toString() {
 		return ("toString cadeia valor subgrupo: "+this.descricaoSubgrupo);
 	}

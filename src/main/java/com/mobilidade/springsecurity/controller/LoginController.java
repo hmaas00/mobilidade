@@ -71,11 +71,13 @@ public class LoginController {
 		//testes
 
 		System.out.println("controller solicitar-permuta: nome pessoa - " + p.getNomePessoa());
+		System.out.println("controller solicitar-permuta: motivo pessoa - " + p.getMotivoPrincipal());
 		System.out.println("controller solicitar-permuta: praca pessoa - " + p.getPraca().getNomePraca());
 		System.out.println("controller solicitar-permuta: componente pessoa - " + p.getComponenteAdministrativo().getNomeComponente());
 		System.out.println("controller solicitar-permuta: unidade - " + p.getComponenteAdministrativo().getUnidade());
 		System.out.println("controller solicitar-permuta: cadeia valor - " + p.getCadeiaValorSubgrupo().getDescricaoSubgrupo());
 		System.out.println("\n\n\nCadeias de valor: \n" + listaCadValor);
+		//System.out.println("\n\n\nSolicitações de permuta: \n" + p.getListSolicitacaoPermuta());
 		//add model - pessoa
 		model.addAttribute("pessoa", p);
 
@@ -86,8 +88,12 @@ public class LoginController {
 
 		model.addAttribute("motivos", motivosLista);
 		
-		// cadeia de valor já escolhida
+		// add model - cadeia de valor já escolhida
 		model.addAttribute("cadeiaValorPreviamenteEscolhida",cadeiaJaEscolhida);		
+		
+		// add model - motivo já escolhido
+		
+		model.addAttribute("motivoPreviamenteEscolhido", p.getMotivoPrincipal());
 		
 		return "solicitacao-permuta";
 

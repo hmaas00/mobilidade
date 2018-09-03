@@ -57,6 +57,9 @@
 			<p class="text-center">
 				Escolha até 3 opções de <strong>Permuta:</strong>
 			</p>
+			<p class="text-center">
+				O motivo principal do seu pedido será visível <strong>somente</strong> pelo <strong>DEPES</strong>
+			</p>
 		</div>
 		<form class="form-horizontal" action="/action_page.php">
 			<div class="form-group">
@@ -116,10 +119,10 @@
 							<c:choose>
 
 								<c:when test="${ cadeiaValorPreviamenteEscolhida == processoTrabalho.descricaoSubgrupo}">
-            							<option selected>${processoTrabalho.descricaoSubgrupo}</option>
+            							<option value="${processoTrabalho.descricaoSubgrupo}" selected>${processoTrabalho.descricaoSubgrupo}</option>
          						</c:when>
          						<c:otherwise>
-            						<option>${processoTrabalho.descricaoSubgrupo}</option>
+            						<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
          						</c:otherwise>
 							</c:choose>
 
@@ -133,7 +136,14 @@
 				<div class="col-sm-6">
 					<select class="form-control" id="motivo" name="motivo">
 						<c:forEach items="${motivos}" var="m">
-							<option>${m}</option>
+							<c:choose>
+								<c:when test="${ motivoPreviamenteEscolhido == m}">
+            							<option value="${m}" selected>${m}</option>
+         						</c:when>
+         						<c:otherwise>
+            						<option value="${m}">${m}</option>
+         						</c:otherwise>
+							</c:choose>
 						</c:forEach>
 					</select>
 				</div>

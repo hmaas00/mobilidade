@@ -52,7 +52,22 @@ public class Unidade {
 					CascadeType.DETACH,CascadeType.REFRESH})
 	private List<ComponenteAdministrativo> listComponentes;
 
+	//relação com solicitacao de permuta	
+	@OneToMany(mappedBy="unidade",
+			cascade= {CascadeType.PERSIST,CascadeType.MERGE,
+					CascadeType.DETACH,CascadeType.REFRESH})
+	private List<SolicitacaoPermuta> listSolicitacaoPermuta;
+	
 	//gets sets
+	
+
+	public List<SolicitacaoPermuta> getListSolicitacaoPermuta() {
+		return listSolicitacaoPermuta;
+	}
+
+	public void setListSolicitacaoPermuta(List<SolicitacaoPermuta> listSolicitacaoPermuta) {
+		this.listSolicitacaoPermuta = listSolicitacaoPermuta;
+	}
 	
 	public int getIdUnidade() {
 		return idUnidade;

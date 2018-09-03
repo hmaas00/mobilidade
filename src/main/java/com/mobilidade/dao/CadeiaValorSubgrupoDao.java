@@ -10,6 +10,7 @@ import com.mobilidade.entidade.CadeiaValorSubgrupo;
 import com.mobilidade.entidade.ComponenteAdministrativo;
 import com.mobilidade.entidade.Pessoa;
 import com.mobilidade.entidade.Praca;
+import com.mobilidade.entidade.SolicitacaoPermuta;
 import com.mobilidade.entidade.Unidade;
 import com.mobilidade.entidade.User;
 
@@ -29,6 +30,7 @@ public class CadeiaValorSubgrupoDao {
 				.addAnnotatedClass(ComponenteAdministrativo.class)
 				.addAnnotatedClass(Unidade.class)
 				.addAnnotatedClass(CadeiaValorSubgrupo.class)
+				.addAnnotatedClass(SolicitacaoPermuta.class)
 				.buildSessionFactory();
 		Session session = fac.getCurrentSession();
 
