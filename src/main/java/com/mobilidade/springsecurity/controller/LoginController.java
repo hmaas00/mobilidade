@@ -18,9 +18,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.mobilidade.auxiliar.Motivo;
 import com.mobilidade.dao.CadeiaValorSubgrupoDao;
 import com.mobilidade.dao.PessoaDao;
+import com.mobilidade.dao.PracaDao;
+import com.mobilidade.dao.SolicitacaoPermutaDao;
+import com.mobilidade.dao.UnidadeDao;
 import com.mobilidade.entidade.CadeiaValorSubgrupo;
 import com.mobilidade.entidade.Pessoa;
 import com.mobilidade.entidade.Praca;
+import com.mobilidade.entidade.SolicitacaoPermuta;
+import com.mobilidade.entidade.Unidade;
 import com.mobilidade.entidade.User;
 
 @Controller
@@ -61,13 +66,24 @@ public class LoginController {
 		CadeiaValorSubgrupoDao cadeiaDao = new CadeiaValorSubgrupoDao();
 
 		List <CadeiaValorSubgrupo> listaCadValor = cadeiaDao.findAll();
-		
+
 		// lista de motivos
-		
+
 		List<String> motivosLista = Motivo.getListaMotivos();
-		
+
 		// cadeia de valor já escolhida
 		String cadeiaJaEscolhida = p.getCadeiaValorSubgrupo().getDescricaoSubgrupo();
+
+		//lista pracas
+		PracaDao pracaDao = new PracaDao();
+		List<Praca> listPraca = pracaDao.findAll();
+		//lista unidades
+		UnidadeDao unidadeDao = new UnidadeDao();
+		List<Unidade> listUnidade = unidadeDao.findAll();
+		
+		//lista solicitacoes por id pessoa
+		SolicitacaoPermutaDao solicitacaoPermutaDao = new SolicitacaoPermutaDao();
+		List<SolicitacaoPermuta>  listSolicitacoes = solicitacaoPermutaDao.findByPessoaId(p.getIdPessoa());
 		//testes
 
 		System.out.println("controller solicitar-permuta: nome pessoa - " + p.getNomePessoa());
@@ -87,13 +103,19 @@ public class LoginController {
 		// add model - lista de motivos
 
 		model.addAttribute("motivos", motivosLista);
-		
+
 		// add model - cadeia de valor já escolhida
 		model.addAttribute("cadeiaValorPreviamenteEscolhida",cadeiaJaEscolhida);		
-		
+
 		// add model - motivo já escolhido
-		
+
 		model.addAttribute("motivoPreviamenteEscolhido", p.getMotivoPrincipal());
+
+		// add model - pracas
+		model.addAttribute("pracas", listPraca);
+
+		// add model - unidades
+				model.addAttribute("unidades", listUnidade);
 		
 		return "solicitacao-permuta";
 

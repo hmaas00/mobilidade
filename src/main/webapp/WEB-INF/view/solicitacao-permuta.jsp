@@ -58,10 +58,17 @@
 				Escolha até 3 opções de <strong>Permuta:</strong>
 			</p>
 			<p class="text-center">
-				O motivo principal do seu pedido será visível <strong>somente</strong> pelo <strong>DEPES</strong>
+				O motivo principal do seu pedido será visível <strong>somente</strong>
+				pelo <strong>DEPES</strong>
+			</p>
+			<p class="text-center">
+				Lembre que para uma solicitação ser <strong>válida</strong> é
+				preciso que seja informada a <strong>Praça</strong> desejada. (
+				unidade e processo de trabalho são opcionais)
 			</p>
 		</div>
-		<form class="form-horizontal" action="/action_page.php">
+		<form class="form-horizontal"
+			action="/processa-solicitacao-permuta.php">
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="matricula">Matrícula:</label>
 				<div class="col-sm-6">
@@ -110,6 +117,7 @@
 						name="praca" value="${pessoa.praca.nomePraca }" disabled>
 				</div>
 			</div>
+			<!-- Processo de trabalho -->
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="processo">Processo
 					de Trabalho Atual:</label>
@@ -118,12 +126,13 @@
 						<c:forEach items="${cadeiasValor}" var="processoTrabalho">
 							<c:choose>
 
-								<c:when test="${ cadeiaValorPreviamenteEscolhida == processoTrabalho.descricaoSubgrupo}">
-            							<option value="${processoTrabalho.descricaoSubgrupo}" selected>${processoTrabalho.descricaoSubgrupo}</option>
-         						</c:when>
-         						<c:otherwise>
-            						<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
-         						</c:otherwise>
+								<c:when
+									test="${ cadeiaValorPreviamenteEscolhida == processoTrabalho.descricaoSubgrupo}">
+									<option value="${processoTrabalho.descricaoSubgrupo}" selected>${processoTrabalho.descricaoSubgrupo}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
+								</c:otherwise>
 							</c:choose>
 
 						</c:forEach>
@@ -138,19 +147,239 @@
 						<c:forEach items="${motivos}" var="m">
 							<c:choose>
 								<c:when test="${ motivoPreviamenteEscolhido == m}">
-            							<option value="${m}" selected>${m}</option>
-         						</c:when>
-         						<c:otherwise>
-            						<option value="${m}">${m}</option>
-         						</c:otherwise>
+									<option value="${m}" selected>${m}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${m}">${m}</option>
+								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 					</select>
 				</div>
 			</div>
+			<!-- Solicitações de permuta -->
+			<br>
+			<p class="text-center">
+				<strong>Solicitações de Permuta:</strong>
+			</p>
+			<hr>
+			<!-- Header solicitações-->
+			<div class="row">
+				<div class="col-md-3">
+					<p class="text-center">
+						<strong>Praça:</strong>
+					</p>
+				</div>
+				<div class="col-md-3">
+					<p class="text-center">
+						<strong>Unidade:</strong>
+					</p>
+				</div>
+				<div class="col-md-6">
+
+					<p class="text-center">
+						<strong>Processo de Trabalho:</strong>
+					</p>
+				</div>
+			</div>
+			<!-- Fim Header solicitações-->
+			<hr>
+			<!-- Linha 1 -->
+			<div class="row">
+				<p class="text-left">
+					<strong>Solicitação 1</strong>
+				</p>
+				<br>
+
+				<!-- Linha 1 - Coluna 1 -->
+				<div class="col-md-3">
+
+					<!-- Praça -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="pracaEscolhida1"
+								name="pracaEscolhida1">
+
+								<option value=""></option>
+								<c:forEach items="${pracas}" var="p">
+									<option value="${p.nomePraca}">${p.nomePraca}</option>
+								</c:forEach>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- Linha 1 - Coluna 2 -->
+				<div class="col-md-3">
+					<!-- Unidade -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="unidadeEscolhida1"
+								name="unidadeEscolhida1">
+
+								<option value=""></option>
+								<c:forEach items="${unidades}" var="u">
+									<option value="${u.nomeUnidade}">${u.nomeUnidade}</option>
+								</c:forEach>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- Linha 1 - Coluna 3 -->
+				<div class="col-md-6">
+					<!-- Processo de trabalho -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="processoEscolhido1"
+								name="processoEscolhido1">
+								<option value=""></option>
+								<c:forEach items="${cadeiasValor}" var="processoTrabalho">
+									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fim Linha 1 -->
+			<hr />
+			<!-- Linha 2 -->
+			<div class="row">
+				<p class="text-left">
+					<strong>Solicitação 2</strong>
+				</p>
+				<br>
+
+				<!-- Linha 2 - Coluna 1 -->
+				<div class="col-md-3">
+
+					<!-- Praça -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="pracaEscolhida2"
+								name="pracaEscolhida2">
+
+								<option value=""></option>
+								<c:forEach items="${pracas}" var="p">
+									<option value="${p.nomePraca}">${p.nomePraca}</option>
+								</c:forEach>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- Linha 2 - Coluna 2 -->
+				<div class="col-md-3">
+
+					<!-- Unidade -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="unidadeEscolhida2"
+								name="unidadeEscolhida2">
+
+								<option value=""></option>
+								<c:forEach items="${unidades}" var="u">
+									<option value="${u.nomeUnidade}">${u.nomeUnidade}</option>
+								</c:forEach>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- Linha 2 - Coluna 3 -->
+				<div class="col-md-6">
+
+					<!-- Processo de trabalho -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="processoEscolhido2"
+								name="processoEscolhido2">
+								<option value=""></option>
+								<c:forEach items="${cadeiasValor}" var="processoTrabalho">
+									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fim Linha 2 -->
+			<hr />
+			<!-- Linha 3 -->
+			<div class="row">
+				<p class="text-left">
+					<strong>Solicitação 3</strong>
+				</p>
+				<br>
+
+				<!-- Linha 3 - Coluna 1 -->
+				<div class="col-md-3">
+
+					<!-- Praça -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="pracaEscolhida3"
+								name="pracaEscolhida3">
+
+								<option value=""></option>
+								<c:forEach items="${pracas}" var="p">
+									<option value="${p.nomePraca}">${p.nomePraca}</option>
+								</c:forEach>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- Linha 3 - Coluna 2 -->
+				<div class="col-md-3">
+					<!-- Unidade -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="unidadeEscolhida3"
+								name="unidadeEscolhida3">
+
+								<option value=""></option>
+								<c:forEach items="${unidades}" var="u">
+									<option value="${u.nomeUnidade}">${u.nomeUnidade}</option>
+								</c:forEach>
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- Linha 3 - Coluna 3 -->
+				<div class="col-md-6">
+					<!-- Processo de trabalho -->
+					<div class="form-group">
+
+						<div class="col-md-10">
+							<select class="form-control" id="processoEscolhido3"
+								name="processoEscolhido3">
+								<option value=""></option>
+								<c:forEach items="${cadeiasValor}" var="processoTrabalho">
+									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fim Linha 3 -->
+			<hr />
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary" value="Enviar">
+			</div>
+			<hr />
 		</form>
-
 	</div>
-
 </body>
 </html>
