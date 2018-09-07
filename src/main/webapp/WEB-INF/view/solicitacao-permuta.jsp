@@ -14,6 +14,108 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	$( function(){
+		
+		$( document ).ready(function() {
+		    //alert( "ready!" );
+		    if ($('#pracaEscolhida1').val() == 0) {
+				$("#unidadeEscolhida1").prop('disabled', true);
+				$("#processoEscolhido1").prop('disabled', true);
+			}
+		    if ($('#pracaEscolhida2').val() == 0) {
+				$("#unidadeEscolhida2").prop('disabled', true);
+				$("#processoEscolhido2").prop('disabled', true);
+			}
+		    if ($('#pracaEscolhida3').val() == 0) {
+				$("#unidadeEscolhida3").prop('disabled', true);
+				$("#processoEscolhido3").prop('disabled', true);
+			}
+		});
+		
+		$("#btn-limpar").click(function(){
+			$("#pracaEscolhida1").val(0);
+			$("#pracaEscolhida2").val(0);
+			$("#pracaEscolhida3").val(0);
+			
+			$("#unidadeEscolhida1").val(0);
+			$("#unidadeEscolhida1").prop('disabled', true);
+			$("#unidadeEscolhida2").val(0);
+			$("#unidadeEscolhida2").prop('disabled', true);
+			$("#unidadeEscolhida3").val(0);
+			$("#unidadeEscolhida3").prop('disabled', true);
+			
+			$("#processoEscolhido1").val(0);
+			$("#processoEscolhido1").prop('disabled', true);
+			$("#processoEscolhido2").val(0);
+			$("#processoEscolhido2").prop('disabled', true);
+			$("#processoEscolhido3").val(0);
+			$("#processoEscolhido3").prop('disabled', true);
+		});
+	
+		$("#pracaEscolhida1").change(function() {
+			if ($('#pracaEscolhida1').val() == 0) {
+				$("#unidadeEscolhida1").prop('disabled', true);
+				$("#unidadeEscolhida1").val(0);
+				$("#processoEscolhido1").prop('disabled', true);
+				$("#processoEscolhido1").val(0);
+			}
+			else{
+				$("#unidadeEscolhida1").prop('disabled', false);
+				
+				$("#processoEscolhido1").prop('disabled', false);
+				
+			}
+		});
+		
+		
+		$("#pracaEscolhida2").change(function() {
+			if ($('#pracaEscolhida2').val() == 0) {
+				$("#unidadeEscolhida2").prop('disabled', true);
+				$("#unidadeEscolhida2").val(0);
+				$("#processoEscolhido2").prop('disabled', true);
+				$("#processoEscolhido2").val(0);
+			}
+			else{
+				$("#unidadeEscolhida2").prop('disabled', false);
+				
+				$("#processoEscolhido2").prop('disabled', false);
+				
+			}
+		});
+		
+		
+		$("#pracaEscolhida3").change(function() {
+			if ($('#pracaEscolhida3').val() == 0) {
+				$("#unidadeEscolhida3").prop('disabled', true);
+				$("#unidadeEscolhida3").val(0);
+				$("#processoEscolhido3").prop('disabled', true);
+				$("#processoEscolhido3").val(0);
+			}
+			else{
+				$("#unidadeEscolhida3").prop('disabled', false);
+				
+				$("#processoEscolhido3").prop('disabled', false);
+				
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	});
+
+	
+
+</script>
 </head>
 <body>
 
@@ -44,7 +146,8 @@
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Usuário: <security:authentication property="principal.username" /></a></li>
+				<li><a href="#">Usuário: <security:authentication
+							property="principal.username" /></a></li>
 				<li><a href="${pageContext.request.contextPath}/logout"><span
 						class="glyphicon glyphicon-log-out"></span>logout</a></li>
 			</ul>
@@ -129,7 +232,8 @@
 
 								<c:when
 									test="${ cadeiaValorPreviamenteEscolhida == processoTrabalho.descricaoSubgrupo}">
-									<option value="${processoTrabalho.idCadeiaValorSubgrupo}" selected>${processoTrabalho.descricaoSubgrupo}</option>
+									<option value="${processoTrabalho.idCadeiaValorSubgrupo}"
+										selected>${processoTrabalho.descricaoSubgrupo}</option>
 								</c:when>
 								<c:otherwise>
 									<option value="${processoTrabalho.idCadeiaValorSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
@@ -210,7 +314,8 @@
 										<option value="0"></option>
 										<c:forEach items="${pracas}" var="p">
 											<c:choose>
-											<c:when test="${ p.nomePraca == solicitacoesFeitas[0].praca.nomePraca }">
+												<c:when
+													test="${ p.nomePraca == solicitacoesFeitas[0].praca.nomePraca }">
 													<option value="${p.idPraca}" selected>${p.nomePraca}</option>
 												</c:when>
 												<c:otherwise>
@@ -246,7 +351,8 @@
 										<option value="0"></option>
 										<c:forEach items="${unidades}" var="u">
 											<c:choose>
-											<c:when test="${ u.nomeUnidade == solicitacoesFeitas[0].unidade.nomeUnidade }">
+												<c:when
+													test="${ u.nomeUnidade == solicitacoesFeitas[0].unidade.nomeUnidade }">
 													<option value="${u.idUnidade}" selected>${u.nomeUnidade}</option>
 												</c:when>
 												<c:otherwise>
@@ -284,7 +390,8 @@
 										<option value="0"></option>
 										<c:forEach items="${cadeiasValor}" var="pt">
 											<c:choose>
-												<c:when	test="${ pt.descricaoSubgrupo == solicitacoesFeitas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
+												<c:when
+													test="${ pt.descricaoSubgrupo == solicitacoesFeitas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
 													<option value="${pt.idCadeiaValorSubgrupo}" selected>${pt.descricaoSubgrupo}</option>
 												</c:when>
 												<c:otherwise>
@@ -331,7 +438,8 @@
 										<option value="0"></option>
 										<c:forEach items="${pracas}" var="p">
 											<c:choose>
-											<c:when test="${ p.nomePraca == solicitacoesFeitas[1].praca.nomePraca }">
+												<c:when
+													test="${ p.nomePraca == solicitacoesFeitas[1].praca.nomePraca }">
 													<option value="${p.idPraca}" selected>${p.nomePraca}</option>
 												</c:when>
 												<c:otherwise>
@@ -367,7 +475,8 @@
 										<option value="0"></option>
 										<c:forEach items="${unidades}" var="u">
 											<c:choose>
-											<c:when test="${ u.nomeUnidade == solicitacoesFeitas[1].unidade.nomeUnidade }">
+												<c:when
+													test="${ u.nomeUnidade == solicitacoesFeitas[1].unidade.nomeUnidade }">
 													<option value="${u.idUnidade}" selected>${u.nomeUnidade}</option>
 												</c:when>
 												<c:otherwise>
@@ -397,14 +506,15 @@
 						<div class="col-md-10">
 							<select class="form-control" id="processoEscolhido2"
 								name="processoEscolhido2">
-								
+
 								<!-- Caso existam duas ou mais  solicitações... -->
 								<c:choose>
 									<c:when test="${totalSolicitacoes >= 2}">
 										<option value="0"></option>
 										<c:forEach items="${cadeiasValor}" var="pt">
 											<c:choose>
-												<c:when	test="${ pt.descricaoSubgrupo == solicitacoesFeitas[1].cadeiaValorSubgrupo.descricaoSubgrupo }">
+												<c:when
+													test="${ pt.descricaoSubgrupo == solicitacoesFeitas[1].cadeiaValorSubgrupo.descricaoSubgrupo }">
 													<option value="${pt.idCadeiaValorSubgrupo}" selected>${pt.descricaoSubgrupo}</option>
 												</c:when>
 												<c:otherwise>
@@ -450,7 +560,8 @@
 										<option value="0"></option>
 										<c:forEach items="${pracas}" var="p">
 											<c:choose>
-											<c:when test="${ p.nomePraca == solicitacoesFeitas[2].praca.nomePraca }">
+												<c:when
+													test="${ p.nomePraca == solicitacoesFeitas[2].praca.nomePraca }">
 													<option value="${p.idPraca}" selected>${p.nomePraca}</option>
 												</c:when>
 												<c:otherwise>
@@ -487,7 +598,8 @@
 										<option value="0"></option>
 										<c:forEach items="${unidades}" var="u">
 											<c:choose>
-											<c:when test="${ u.nomeUnidade == solicitacoesFeitas[2].unidade.nomeUnidade }">
+												<c:when
+													test="${ u.nomeUnidade == solicitacoesFeitas[2].unidade.nomeUnidade }">
 													<option value="${u.idUnidade}" selected>${u.nomeUnidade}</option>
 												</c:when>
 												<c:otherwise>
@@ -504,7 +616,7 @@
 
 									</c:otherwise>
 								</c:choose>
-								
+
 
 							</select>
 						</div>
@@ -518,14 +630,15 @@
 						<div class="col-md-10">
 							<select class="form-control" id="processoEscolhido3"
 								name="processoEscolhido3">
-								
+
 								<!-- Caso existam duas ou mais  solicitações... -->
 								<c:choose>
 									<c:when test="${totalSolicitacoes >= 3}">
 										<option value="0"></option>
 										<c:forEach items="${cadeiasValor}" var="pt">
 											<c:choose>
-												<c:when	test="${ pt.descricaoSubgrupo == solicitacoesFeitas[2].cadeiaValorSubgrupo.descricaoSubgrupo }">
+												<c:when
+													test="${ pt.descricaoSubgrupo == solicitacoesFeitas[2].cadeiaValorSubgrupo.descricaoSubgrupo }">
 													<option value="${pt.idCadeiaValorSubgrupo}" selected>${pt.descricaoSubgrupo}</option>
 												</c:when>
 												<c:otherwise>
@@ -541,7 +654,7 @@
 										</c:forEach>
 									</c:otherwise>
 								</c:choose>
-								
+
 							</select>
 						</div>
 					</div>
@@ -550,6 +663,8 @@
 			<!-- Fim Linha 3 -->
 			<hr />
 			<div class="text-center">
+				
+				<input type="button" class="btn btn-default" value="limpar solicitações" id="btn-limpar">
 				<input type="submit" class="btn btn-primary" value="Enviar">
 			</div>
 			<hr />
