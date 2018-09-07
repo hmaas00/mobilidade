@@ -16,13 +16,17 @@ import com.mobilidade.entidade.User;
 
 public class CadeiaValorSubgrupoDao {
 
+	
+	SessionFactory fac;
+	Session session;
+	
+	public CadeiaValorSubgrupoDao() {
+		
 
-	public List <CadeiaValorSubgrupo> findAll() {
-		// TODO Auto-generated method stub
-
-		System.out.println("CadeiaValorSubgrupo dao");
-
-		SessionFactory fac = new Configuration()
+	}
+	
+	public void initDao() {
+		fac = new Configuration()
 				.configure()
 				.addAnnotatedClass(Pessoa.class)
 				.addAnnotatedClass(Praca.class)
@@ -32,9 +36,17 @@ public class CadeiaValorSubgrupoDao {
 				.addAnnotatedClass(CadeiaValorSubgrupo.class)
 				.addAnnotatedClass(SolicitacaoPermuta.class)
 				.buildSessionFactory();
-		Session session = fac.getCurrentSession();
+		session = fac.getCurrentSession();
+	}
+	
+
+	public List <CadeiaValorSubgrupo> findAll() {
+		// TODO Auto-generated method stub
+
+		System.out.println("CadeiaValorSubgrupo dao");
 
 		try {
+			initDao();
 			session.beginTransaction();
 
 			List <CadeiaValorSubgrupo> list = session.createQuery("from CadeiaValorSubgrupo cad").getResultList();
@@ -42,6 +54,37 @@ public class CadeiaValorSubgrupoDao {
 			System.out.println("\n\nCadeias de valor - subgrupos:\n" + list);
 			session.getTransaction().commit();
 			return list;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+
+		}
+	}
+	
+	public CadeiaValorSubgrupo findById( int id) {
+		// TODO Auto-generated method stub
+
+		System.out.println("CadeiaValorSubgrupo dao");
+
+		try {
+			
+			initDao();
+			
+			session.beginTransaction();
+			
+			String query = "from CadeiaValorSubgrupo cad where cad.idCadeiaValorSubgrupo= " + id;
+
+			CadeiaValorSubgrupo cadeiaValorSubgrupo = (CadeiaValorSubgrupo)session
+					.createQuery( query ).uniqueResult();
+
+			System.out.println("\n\nCadeias de valor - uniqueResult:\n" + cadeiaValorSubgrupo.getDescricaoSubgrupo());
+			session.getTransaction().commit();
+			return cadeiaValorSubgrupo;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

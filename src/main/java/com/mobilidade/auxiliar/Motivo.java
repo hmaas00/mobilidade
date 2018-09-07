@@ -25,10 +25,12 @@ public class Motivo {
 		listaMotivos.add("clima organizacional desfavorável");
 		listaMotivos.add("insatisfação com estilo gerencial da chefia");
 		listaMotivos.add("ociosidade");
+		listaMotivos.sort(String.CASE_INSENSITIVE_ORDER);
 		return listaMotivos;
 	}
 
 	public void setListaMotivos(List<String> listaMotivos) {
 		this.listaMotivos = listaMotivos;
 	}
+	
 }

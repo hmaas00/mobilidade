@@ -17,9 +17,54 @@ import com.mobilidade.entidade.User;
 public class PessoaDao {
 
 
+	SessionFactory fac;
+	Session session;
+	
 	public PessoaDao() {
+		initDao();
+	}
+	
+	public void initDao() {
+		fac = new Configuration()
+				.configure()
+				.addAnnotatedClass(Pessoa.class)
+				.addAnnotatedClass(Praca.class)
+				.addAnnotatedClass(User.class)
+				.addAnnotatedClass(ComponenteAdministrativo.class)
+				.addAnnotatedClass(Unidade.class)
+				.addAnnotatedClass(CadeiaValorSubgrupo.class)
+				.addAnnotatedClass(SolicitacaoPermuta.class)
+				.buildSessionFactory();
+		session = fac.getCurrentSession();
+	}
+	
+	public void updateProcessoMotivo(Pessoa p, CadeiaValorSubgrupo processo,
+			String motivo) {
+		
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			p.setCadeiaValorSubgrupo(processo);
+			p.setMotivoPrincipal(motivo);
+			
+			System.out.println("pessoaDao update - pessoa: " + p);
+			
+			session.update(p);
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}	
 		
 	}
+	
 	public long count() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -75,19 +120,10 @@ public class PessoaDao {
 		
 		System.out.println("pessoa dao findByLoginName: " + loginName);
 		
-		SessionFactory fac = new Configuration()
-				.configure()
-				.addAnnotatedClass(Pessoa.class)
-				.addAnnotatedClass(Praca.class)
-				.addAnnotatedClass(User.class)
-				.addAnnotatedClass(ComponenteAdministrativo.class)
-				.addAnnotatedClass(Unidade.class)
-				.addAnnotatedClass(CadeiaValorSubgrupo.class)
-				.addAnnotatedClass(SolicitacaoPermuta.class)
-				.buildSessionFactory();
-		Session session = fac.getCurrentSession();
+		
 		
 		try {
+			initDao();
 			session.beginTransaction();
 			//Query query = session.createQuery("select username from users where username = " + principal.getName());
 			//List list = ((org.hibernate.query.Query) query).list();

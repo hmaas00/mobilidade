@@ -16,9 +16,17 @@ import com.mobilidade.entidade.User;
 
 public class UnidadeDao {
 	
-	public List <Unidade> findAll() {
-		// TODO Auto-generated method stub
-		SessionFactory fac = new Configuration()
+	private SessionFactory fac;
+	private Session session;
+	
+	public UnidadeDao() {
+		
+		
+		
+	}
+	
+	public void initDao() {
+		fac = new Configuration()
 				.configure()
 				.addAnnotatedClass(Pessoa.class)
 				.addAnnotatedClass(Praca.class)
@@ -28,7 +36,13 @@ public class UnidadeDao {
 				.addAnnotatedClass(CadeiaValorSubgrupo.class)
 				.addAnnotatedClass(SolicitacaoPermuta.class)
 				.buildSessionFactory();
-		Session session = fac.getCurrentSession();
+		session = fac.getCurrentSession();
+	}
+	
+	
+	public List <Unidade> findAll() {
+		// TODO Auto-generated method stub
+		initDao();
 		
 		try {
 			session.beginTransaction();
@@ -38,6 +52,30 @@ public class UnidadeDao {
 			
 			session.getTransaction().commit();
 			return unidades;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+	}
+	
+	public Unidade findById( int id ) {
+		// TODO Auto-generated method stub
+		initDao();
+		
+		try {
+			session.beginTransaction();
+			
+			
+			Unidade unidade = (Unidade)session.createQuery("from Unidade u where u.idUnidade =" + id).uniqueResult();
+			
+			session.getTransaction().commit();
+			return unidade;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

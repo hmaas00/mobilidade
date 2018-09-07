@@ -38,12 +38,13 @@
 						<li><a
 							href="${pageContext.request.contextPath}/solicitar-permuta">Solicitação
 								de permuta</a></li>
-						<security:authorize access="hasRole('ADMIN')">
+						<security:authorize access="hasRole('DEPES')">
 							<li><a href="#">Gerenciamento da permuta</a></li>
 						</security:authorize>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">Usuário: <security:authentication property="principal.username" /></a></li>
 				<li><a href="${pageContext.request.contextPath}/logout"><span
 						class="glyphicon glyphicon-log-out"></span>logout</a></li>
 			</ul>
@@ -68,7 +69,7 @@
 			</p>
 		</div>
 		<form class="form-horizontal"
-			action="/processa-solicitacao-permuta.php">
+			action="${pageContext.request.contextPath}/processa-solicitacao-permuta">
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="matricula">Matrícula:</label>
 				<div class="col-sm-6">
@@ -128,10 +129,10 @@
 
 								<c:when
 									test="${ cadeiaValorPreviamenteEscolhida == processoTrabalho.descricaoSubgrupo}">
-									<option value="${processoTrabalho.descricaoSubgrupo}" selected>${processoTrabalho.descricaoSubgrupo}</option>
+									<option value="${processoTrabalho.idCadeiaValorSubgrupo}" selected>${processoTrabalho.descricaoSubgrupo}</option>
 								</c:when>
 								<c:otherwise>
-									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
+									<option value="${processoTrabalho.idCadeiaValorSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
 								</c:otherwise>
 							</c:choose>
 
@@ -139,18 +140,19 @@
 					</select>
 				</div>
 			</div>
+			<!-- Motivo Principal -->
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="motivo">Motivo
 					Principal:</label>
 				<div class="col-sm-6">
 					<select class="form-control" id="motivo" name="motivo">
-						<c:forEach items="${motivos}" var="m">
+						<c:forEach items="${motivos}" var="m" varStatus="loop">
 							<c:choose>
 								<c:when test="${ motivoPreviamenteEscolhido == m}">
-									<option value="${m}" selected>${m}</option>
+									<option value="${loop.index}" selected>${m}</option>
 								</c:when>
 								<c:otherwise>
-									<option value="${m}">${m}</option>
+									<option value="${loop.index}">${m}</option>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -201,11 +203,30 @@
 							<select class="form-control" id="pracaEscolhida1"
 								name="pracaEscolhida1">
 
-								<option value=""></option>
-								<c:forEach items="${pracas}" var="p">
-									<option value="${p.nomePraca}">${p.nomePraca}</option>
-								</c:forEach>
 
+								<!-- Caso exista uma solicitação... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 1}">
+										<option value="0"></option>
+										<c:forEach items="${pracas}" var="p">
+											<c:choose>
+											<c:when test="${ p.nomePraca == solicitacoesFeitas[0].praca.nomePraca }">
+													<option value="${p.idPraca}" selected>${p.nomePraca}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${p.idPraca}">${p.nomePraca}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${pracas}" var="p">
+											<option value="${p.idPraca}">${p.nomePraca}</option>
+										</c:forEach>
+
+									</c:otherwise>
+								</c:choose>
 							</select>
 						</div>
 					</div>
@@ -219,10 +240,29 @@
 							<select class="form-control" id="unidadeEscolhida1"
 								name="unidadeEscolhida1">
 
-								<option value=""></option>
-								<c:forEach items="${unidades}" var="u">
-									<option value="${u.nomeUnidade}">${u.nomeUnidade}</option>
-								</c:forEach>
+								<!-- Caso exista uma solicitação... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 1}">
+										<option value="0"></option>
+										<c:forEach items="${unidades}" var="u">
+											<c:choose>
+											<c:when test="${ u.nomeUnidade == solicitacoesFeitas[0].unidade.nomeUnidade }">
+													<option value="${u.idUnidade}" selected>${u.nomeUnidade}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${u.idUnidade}">${u.nomeUnidade}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${unidades}" var="u">
+											<option value="${u.idUnidade}">${u.nomeUnidade}</option>
+										</c:forEach>
+
+									</c:otherwise>
+								</c:choose>
 
 							</select>
 						</div>
@@ -236,10 +276,31 @@
 						<div class="col-md-10">
 							<select class="form-control" id="processoEscolhido1"
 								name="processoEscolhido1">
-								<option value=""></option>
-								<c:forEach items="${cadeiasValor}" var="processoTrabalho">
-									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
-								</c:forEach>
+
+
+								<!-- Caso exista uma solicitação... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 1}">
+										<option value="0"></option>
+										<c:forEach items="${cadeiasValor}" var="pt">
+											<c:choose>
+												<c:when	test="${ pt.descricaoSubgrupo == solicitacoesFeitas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
+													<option value="${pt.idCadeiaValorSubgrupo}" selected>${pt.descricaoSubgrupo}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${pt.idCadeiaValorSubgrupo}">${pt.descricaoSubgrupo}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${cadeiasValor}" var="pt">
+											<option value="${pt.idCadeiaValorSubgrupo}">${pt.descricaoSubgrupo}</option>
+										</c:forEach>
+
+									</c:otherwise>
+								</c:choose>
 							</select>
 						</div>
 					</div>
@@ -264,11 +325,28 @@
 							<select class="form-control" id="pracaEscolhida2"
 								name="pracaEscolhida2">
 
-								<option value=""></option>
-								<c:forEach items="${pracas}" var="p">
-									<option value="${p.nomePraca}">${p.nomePraca}</option>
-								</c:forEach>
-
+								<!-- Caso existam duas ou mais solicitações... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 2}">
+										<option value="0"></option>
+										<c:forEach items="${pracas}" var="p">
+											<c:choose>
+											<c:when test="${ p.nomePraca == solicitacoesFeitas[1].praca.nomePraca }">
+													<option value="${p.idPraca}" selected>${p.nomePraca}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${p.idPraca}">${p.nomePraca}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${pracas}" var="p">
+											<option value="${p.idPraca}">${p.nomePraca}</option>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</select>
 						</div>
 					</div>
@@ -283,11 +361,29 @@
 							<select class="form-control" id="unidadeEscolhida2"
 								name="unidadeEscolhida2">
 
-								<option value=""></option>
-								<c:forEach items="${unidades}" var="u">
-									<option value="${u.nomeUnidade}">${u.nomeUnidade}</option>
-								</c:forEach>
+								<!-- Caso existam duas ou mais solicitações... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 2}">
+										<option value="0"></option>
+										<c:forEach items="${unidades}" var="u">
+											<c:choose>
+											<c:when test="${ u.nomeUnidade == solicitacoesFeitas[1].unidade.nomeUnidade }">
+													<option value="${u.idUnidade}" selected>${u.nomeUnidade}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${u.idUnidade}">${u.nomeUnidade}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${unidades}" var="u">
+											<option value="${u.idUnidade}">${u.nomeUnidade}</option>
+										</c:forEach>
 
+									</c:otherwise>
+								</c:choose>
 							</select>
 						</div>
 					</div>
@@ -301,10 +397,29 @@
 						<div class="col-md-10">
 							<select class="form-control" id="processoEscolhido2"
 								name="processoEscolhido2">
-								<option value=""></option>
-								<c:forEach items="${cadeiasValor}" var="processoTrabalho">
-									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
-								</c:forEach>
+								
+								<!-- Caso existam duas ou mais  solicitações... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 2}">
+										<option value="0"></option>
+										<c:forEach items="${cadeiasValor}" var="pt">
+											<c:choose>
+												<c:when	test="${ pt.descricaoSubgrupo == solicitacoesFeitas[1].cadeiaValorSubgrupo.descricaoSubgrupo }">
+													<option value="${pt.idCadeiaValorSubgrupo}" selected>${pt.descricaoSubgrupo}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${pt.idCadeiaValorSubgrupo}">${pt.descricaoSubgrupo}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${cadeiasValor}" var="pt">
+											<option value="${pt.idCadeiaValorSubgrupo}">${pt.descricaoSubgrupo}</option>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</select>
 						</div>
 					</div>
@@ -329,10 +444,29 @@
 							<select class="form-control" id="pracaEscolhida3"
 								name="pracaEscolhida3">
 
-								<option value=""></option>
-								<c:forEach items="${pracas}" var="p">
-									<option value="${p.nomePraca}">${p.nomePraca}</option>
-								</c:forEach>
+								<!-- Caso existam 3 ou mais solicitações... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 3}">
+										<option value="0"></option>
+										<c:forEach items="${pracas}" var="p">
+											<c:choose>
+											<c:when test="${ p.nomePraca == solicitacoesFeitas[2].praca.nomePraca }">
+													<option value="${p.idPraca}" selected>${p.nomePraca}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${p.idPraca}">${p.nomePraca}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${pracas}" var="p">
+											<option value="${p.idPraca}">${p.nomePraca}</option>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+
 
 							</select>
 						</div>
@@ -347,10 +481,30 @@
 							<select class="form-control" id="unidadeEscolhida3"
 								name="unidadeEscolhida3">
 
-								<option value=""></option>
-								<c:forEach items="${unidades}" var="u">
-									<option value="${u.nomeUnidade}">${u.nomeUnidade}</option>
-								</c:forEach>
+								<!-- Caso existam 3 ou mais solicitações... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 3}">
+										<option value="0"></option>
+										<c:forEach items="${unidades}" var="u">
+											<c:choose>
+											<c:when test="${ u.nomeUnidade == solicitacoesFeitas[2].unidade.nomeUnidade }">
+													<option value="${u.idUnidade}" selected>${u.nomeUnidade}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${u.idUnidade}">${u.nomeUnidade}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${unidades}" var="u">
+											<option value="${u.idUnidade}">${u.nomeUnidade}</option>
+										</c:forEach>
+
+									</c:otherwise>
+								</c:choose>
+								
 
 							</select>
 						</div>
@@ -364,10 +518,30 @@
 						<div class="col-md-10">
 							<select class="form-control" id="processoEscolhido3"
 								name="processoEscolhido3">
-								<option value=""></option>
-								<c:forEach items="${cadeiasValor}" var="processoTrabalho">
-									<option value="${processoTrabalho.descricaoSubgrupo}">${processoTrabalho.descricaoSubgrupo}</option>
-								</c:forEach>
+								
+								<!-- Caso existam duas ou mais  solicitações... -->
+								<c:choose>
+									<c:when test="${totalSolicitacoes >= 3}">
+										<option value="0"></option>
+										<c:forEach items="${cadeiasValor}" var="pt">
+											<c:choose>
+												<c:when	test="${ pt.descricaoSubgrupo == solicitacoesFeitas[2].cadeiaValorSubgrupo.descricaoSubgrupo }">
+													<option value="${pt.idCadeiaValorSubgrupo}" selected>${pt.descricaoSubgrupo}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${pt.idCadeiaValorSubgrupo}">${pt.descricaoSubgrupo}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<option value="0"></option>
+										<c:forEach items="${cadeiasValor}" var="pt">
+											<option value="${pt.idCadeiaValorSubgrupo}">${pt.descricaoSubgrupo}</option>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+								
 							</select>
 						</div>
 					</div>

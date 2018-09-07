@@ -16,9 +16,17 @@ import com.mobilidade.entidade.User;
 
 public class PracaDao {
 	
-	public List <Praca> findAll() {
-		// TODO Auto-generated method stub
-		SessionFactory fac = new Configuration()
+	
+	private SessionFactory fac;
+	private Session session;
+	
+	public PracaDao() {
+		
+		
+	}
+	
+	public void initDao() {
+		fac = new Configuration()
 				.configure()
 				.addAnnotatedClass(Pessoa.class)
 				.addAnnotatedClass(Praca.class)
@@ -28,7 +36,13 @@ public class PracaDao {
 				.addAnnotatedClass(CadeiaValorSubgrupo.class)
 				.addAnnotatedClass(SolicitacaoPermuta.class)
 				.buildSessionFactory();
-		Session session = fac.getCurrentSession();
+		session = fac.getCurrentSession();
+	}
+	
+	public List <Praca> findAll() {
+		// TODO Auto-generated method stub
+		
+		initDao();
 		
 		try {
 			session.beginTransaction();
@@ -38,6 +52,32 @@ public class PracaDao {
 			//localiza pessoa associada ao user
 			session.getTransaction().commit();
 			return pracas;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+	}
+	
+	public Praca findById( int id ) {
+		// TODO Auto-generated method stub
+		
+		
+		initDao();
+		
+		try {
+			session.beginTransaction();
+			
+			
+			Praca praca = (Praca) session.createQuery("from Praca p where p.idPraca = " + id).uniqueResult();
+			//localiza pessoa associada ao user
+			session.getTransaction().commit();
+			return praca;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

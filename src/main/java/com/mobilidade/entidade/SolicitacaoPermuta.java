@@ -17,9 +17,17 @@ public class SolicitacaoPermuta {
 	public SolicitacaoPermuta() {
 		
 	}
+
+	public SolicitacaoPermuta(Pessoa p, Praca praca, Unidade u, CadeiaValorSubgrupo processo) {
+		this.setPessoa(p);
+		this.setPraca(praca);
+		this.setUnidade(u);
+		this.setCadeiaValorSubgrupo(processo);
+		
+	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_solicitacao_permuta")
 	private int idSolicitacaoPermuta;
 	
@@ -85,9 +93,8 @@ public class SolicitacaoPermuta {
 	
 	//to string
 	public String toString() {
-		return ("unidade da solicitacao: " + this.unidade.getNomeUnidade() +" \n"
-		 + "praca da solicitacao: " + this.praca.getNomePraca() +" \n"
-		 + "cadeia valor da solicitacao: " + this.cadeiaValorSubgrupo.getDescricaoSubgrupo() +" \n"
+		return (
+		 "praca da solicitacao: " + this.praca.getNomePraca() +" \n"
 		 + "pessoa da solicitacao: " + this.pessoa.getNomePessoa() +" \n"
 				);
 	}

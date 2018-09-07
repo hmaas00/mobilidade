@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,17 +23,14 @@
 				<a class="navbar-brand" href="#">Mobilidade de RH</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a
-					href="${pageContext.request.contextPath}/">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Mobilidade<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Candidatura</a></li>
-						<security:authorize access="hasRole('DEPES')">
 						<li><a href="#">Gerenciamento de componente</a></li>
 						<li><a href="#">Gerenciamento de unidade</a></li>
 						<li><a href="#">Gerenciamento da mobilidade</a></li>
-						</security:authorize>
 					</ul></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Permuta<span class="caret"></span></a>
@@ -46,7 +44,8 @@
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Usuário: <security:authentication property="principal.username" /></a></li>
+				<li><a href="#">Usuário: <security:authentication
+							property="principal.username" /></a></li>
 				<li><a href="${pageContext.request.contextPath}/logout"><span
 						class="glyphicon glyphicon-log-out"></span>logout</a></li>
 			</ul>
@@ -55,24 +54,8 @@
 
 	<div class="container">
 		<div class="jumbotron">
-			<h2 class="text-center">Bem vindo ao Sistema de RH</h2>
-			<br>
-			<p class="text-center">
-				Escolha com qual modalidade você deseja interagir: a <strong>Mobilidade</strong>
-				é o processo em que o candidado escolhe vagas disponibilizadas nessa
-				etapa enquanto a <strong>Permuta</strong> está sempre disponível
-				para participação.
-			</p>
+			<p>Confirmado!</p>
 		</div>
-		<!-- Add a logout button -->
-		<!-- logout antigo
-      	<form:form action="${pageContext.request.contextPath}/logout" 
-			   method="POST">
-		<button type="submit" class="btn btn-default btn-xs">Logout</button>
-	</form:form>
-       -->
-
 	</div>
-
 </body>
 </html>

@@ -52,8 +52,13 @@ public class CadeiaValorSubgrupo {
 	}
 
 	public String getDescricaoSubgrupo() {
+		if(descricaoSubgrupo == null) {
+			return "";
+		}
+		else {
+			return descricaoSubgrupo;
+		}
 		
-		return descricaoSubgrupo;
 	}
 
 	public void setDescricaoSubgrupo(String descricaoSubgrupo) {
