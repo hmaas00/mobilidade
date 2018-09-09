@@ -156,6 +156,40 @@ public class PessoaDao {
 		}	
 	}
 
+	//select s from SolicitacaoPermuta s inner join s.pessoa p where p.idPessoa =
+	
+	public List<Pessoa> getAllByPracaIdWherePracaDesejadaId(int idPracaAtual, int idPracaDesejada) {
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			//###########Localiza user na tabela users pelo loginName##############
+			List <Pessoa> listPessoa = session.createQuery(
+					"select p "
+					+ "from SolicitacaoPermuta s "
+					+ "inner join s.pessoa p "
+					+ "inner join s.praca pra_s "
+					+ "inner join p.praca pra_p "
+					+ "where "
+					+ "pra_p.idPraca = '"+ idPracaDesejada + "' "
+					+ "and "
+					+ "pra_s.idPraca = '"+ idPracaAtual + "' ").getResultList();
+			
+			
+			System.out.println("\n\ngetAllByPracaIdWherePracaDesejadaId: pessoas de uma praça...  \n\n" +listPessoa);
+			session.getTransaction().commit();
+			return listPessoa;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+	}
 
 	public <S extends Pessoa> S save(S arg0) {
 		// TODO Auto-generated method stub

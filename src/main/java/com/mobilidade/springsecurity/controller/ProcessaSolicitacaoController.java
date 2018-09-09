@@ -1,6 +1,7 @@
 package com.mobilidade.springsecurity.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,6 +53,7 @@ public class ProcessaSolicitacaoController {
 		CadeiaValorSubgrupoDao cadeiaValorSubgrupoDao = new CadeiaValorSubgrupoDao();
 		SolicitacaoPermutaDao permutaDao = new SolicitacaoPermutaDao();
 		// classes temporarias
+		ArrayList <SolicitacaoPermuta> arraySolicitacao = new ArrayList();
 		Praca praca1 =null;
 		Unidade unidade1 =null;
 		CadeiaValorSubgrupo cadeiaValorSubgrupo1 =null;
@@ -76,9 +78,9 @@ public class ProcessaSolicitacaoController {
 
 
 		Pessoa p = pesDao.findByLoginName(ln);
-		
+
 		// deletar todas as solicitações anteriores
-		
+
 		permutaDao.deleteAllByPessoa(p);
 
 		// carregar processo de trabalho selecionado
@@ -100,19 +102,20 @@ public class ProcessaSolicitacaoController {
 		if( Integer.parseInt(request.getParameter("pracaEscolhida1")) != 0 ) {
 			// pegar praça, unidade e processo de trabalho desejado
 			praca1 = pracaDao.findById( Integer.parseInt(request.getParameter("pracaEscolhida1"))  );
-			
+
 			if( Integer.parseInt(request.getParameter("unidadeEscolhida1")) != 0 ) {
 				unidade1 = unidadeDao.findById( Integer.parseInt(request.getParameter("unidadeEscolhida1")) );
 			}
 			if( Integer.parseInt(request.getParameter("processoEscolhido1")) != 0 ) {
 				cadeiaValorSubgrupo1 = cadeiaValorSubgrupoDao.findById( Integer.parseInt(request.getParameter("processoEscolhido1")) );
 			}
-			
+
 			// montar solicitação e salvar
 			permuta1 = new SolicitacaoPermuta(p, praca1, unidade1, cadeiaValorSubgrupo1);
 			permutaDao.save(permuta1);
+			arraySolicitacao.add(permuta1);
 			solicitou1 = true;
-			
+
 			quantidadeSolicitacoes++;
 		}
 		if( Integer.parseInt(request.getParameter("pracaEscolhida2")) != 0 ) {
@@ -127,6 +130,7 @@ public class ProcessaSolicitacaoController {
 			// montar solicitação e salvar			
 			permuta2 = new SolicitacaoPermuta(p, praca2, unidade2, cadeiaValorSubgrupo2);
 			permutaDao.save(permuta2);
+			arraySolicitacao.add(permuta2);
 			solicitou2 = true;
 			quantidadeSolicitacoes++;
 		}
@@ -136,24 +140,31 @@ public class ProcessaSolicitacaoController {
 			if( Integer.parseInt(request.getParameter("unidadeEscolhida3")) != 0 ) {
 				unidade3 = unidadeDao.findById(  Integer.parseInt(request.getParameter("unidadeEscolhida3"))  );
 			}
-			
+
 			if( Integer.parseInt(request.getParameter("processoEscolhido3")) != 0 ) {
 				cadeiaValorSubgrupo3 = cadeiaValorSubgrupoDao.findById( Integer.parseInt(request.getParameter("processoEscolhido3")) );
 			}
-			
+
 			// montar solicitação e salvar
 			permuta3 = new SolicitacaoPermuta(p, praca3, unidade3, cadeiaValorSubgrupo3);
 			permutaDao.save(permuta3);
+			arraySolicitacao.add(permuta3);
 			solicitou3 = true;
 			quantidadeSolicitacoes++;
 		}
 
 		System.out.println("controller processaSolicitacao: quantidade de solicitações - " + quantidadeSolicitacoes);
-		
-		
-		
+
+		// Adições no model...
+		model.addAttribute("processo", processoAtual.getDescricaoSubgrupo());
+		model.addAttribute("motivo", motivo);
+		model.addAttribute("quantidade", arraySolicitacao.size());
+		model.addAttribute("permutas", arraySolicitacao);
+		System.out.println( " tttttttttttttttttttttttttttttttttttttttttttttttt"+ p.getPraca().getNomePraca());
+		model.addAttribute("pracaAtual", p.getPraca().getNomePraca());
+		model.addAttribute("pracaAtualId", p.getPraca().getIdPraca());
 		//System.out.println("\n\ns='': " + s.equals(""));
-		
+
 		return "confirmacao-solicitacao";
 	}
 
