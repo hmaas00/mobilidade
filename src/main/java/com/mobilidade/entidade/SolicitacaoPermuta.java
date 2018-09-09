@@ -39,17 +39,17 @@ public class SolicitacaoPermuta {
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,
 			CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="id_praca_fk")
-	private Praca praca;
+	private Praca praca = null;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,
 			CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="id_unidade_fk")
-	private Unidade unidade;
+	private Unidade unidade = null;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,
 			CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="id_cadeia_vlr_subgrupo_fk")
-	private CadeiaValorSubgrupo cadeiaValorSubgrupo;
+	private CadeiaValorSubgrupo cadeiaValorSubgrupo = null;
 
 	public int getIdSolicitacaoPermuta() {
 		return idSolicitacaoPermuta;

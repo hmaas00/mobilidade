@@ -105,9 +105,42 @@ public class PessoaDao {
 	}
 
 
-	public Pessoa findById(Integer arg0) {
+	public Pessoa findById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			
+			Pessoa p = (Pessoa)session.createQuery("from Pessoa p where p.idPessoa = '"+ id +"'").uniqueResult();
+			
+			// força recuperação das solicitações
+			for(SolicitacaoPermuta permuta : p.getListSolicitacaoPermuta() ) {
+				permuta.getPraca().getNomePraca();
+				if(permuta.getUnidade() != null) {
+					permuta.getUnidade().getNomeUnidade();
+				}
+				if(permuta.getCadeiaValorSubgrupo() != null) {
+					permuta.getCadeiaValorSubgrupo().getDescricaoSubgrupo();
+				}
+				
+				
+			}
+			
+			
+			session.getTransaction().commit();
+			return p;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+		
 	}
 	
 	// retorna null se não encontrar

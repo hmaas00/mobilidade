@@ -53,59 +53,82 @@
 	</nav>
 
 	<div class="container">
-		<c:choose>
-			<c:when test="${tamanho == 0}">
-				<div class="jumbotron">
-					<p>Não houve resultados para a busca.</p>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="jumbotron">
-					<p class="text-center">Foram encontrados ${tamanho}
-						solicitante(s).</p>
-				</div>
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th>Nome</th>
-							<th>Praça</th>
-							<th>Unidade</th>
-							<th>Processo de Trabalho</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${pessoas}" var="p" varStatus="i">
+		<div class="jumbotron">
+			<p class="text-center">Detalhes do solicitante:</p>
+		</div>
+		<table class="table table-condensed">
+			<thead>
 
-							<tr>
-								<td>${p.nomePessoa}</td>
-								<td>${p.praca.nomePraca}</td>
-								<td>${p.componenteAdministrativo.unidade.nomeUnidade}</td>
-								<td>${p.cadeiaValorSubgrupo.descricaoSubgrupo}</td>
-								<td>
-									<form class="form-horizontal"
-										action="${pageContext.request.contextPath}/detalharPessoa">
-										<div class="form-group">
-											<input type="hidden" id="idPessoa" name="idPessoa"
-												value="${p.idPessoa}">
-											<button type="submit" class="btn btn-default">
-												<span class="glyphicon glyphicon-info-sign"></span>
-											</button>
-										</div>
-									</form>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Nome:</td>
+					<td>${pessoa.nomePessoa}</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Matrícula:</td>
+					<td>${pessoa.matricula }</td>
+				</tr>
+				<tr>
+					<td>Cargo:</td>
+					<td>${pessoa.cargo }</td>
+				</tr>
+				<tr>
+					<td>Processo de trabalho na cadeia de valor:</td>
+					<td>${pessoa.cadeiaValorSubgrupo.descricaoSubgrupo }</td>
+				</tr>
+				<tr>
+					<td>Praça:</td>
+					<td>${pessoa.praca.nomePraca }</td>
+				</tr>
+				<tr>
+					<td>Componente Administrativo:</td>
+					<td>${pessoa.componenteAdministrativo.nomeComponente }</td>
+				</tr>
+				<tr>
+					<td>Unidade:</td>
+					<td>${pessoa.componenteAdministrativo.unidade.nomeUnidade }</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+				<hr>
+			</tbody>
+		</table>
 
+		<h3 class="text-center">Solicitações:</h3>
+		<br>
+		<c:forEach items="${permutas}" var="per" varStatus="i">
 
-			</c:otherwise>
+			<table class="table table-condensed">
+				<thead>
 
-		</c:choose>
+					<th>Solicitação ${i.index + 1 }:</th>
 
-
+				</thead>
+				<tbody>
+					<tr>
+						<td>Praça Desejada:</td>
+						<td>${per.praca.nomePraca}</td>
+					</tr>
+					<tr>
+						<td>Unidade Desejada:</td>
+						<td>${per.unidade.nomeUnidade}</td>
+					</tr>
+					<tr>
+						<td>Processo de trabalho desejado:</td>
+						<td>${per.cadeiaValorSubgrupo.descricaoSubgrupo}</td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+		</c:forEach>
 	</div>
-
-
 </body>
 </html>

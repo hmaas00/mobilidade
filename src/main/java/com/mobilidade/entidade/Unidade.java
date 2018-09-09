@@ -78,6 +78,9 @@ public class Unidade {
 	}
 
 	public String getNomeUnidade() {
+		if(nomeUnidade == null) {
+			return null;
+		}
 		return nomeUnidade;
 	}
 
