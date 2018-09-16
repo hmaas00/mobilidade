@@ -198,7 +198,7 @@ public class PessoaDao {
 			
 			//###########Localiza user na tabela users pelo loginName##############
 			List <Pessoa> listPessoa = session.createQuery(
-					"select p "
+					"select distinct p "
 					+ "from SolicitacaoPermuta s "
 					+ "inner join s.pessoa p "
 					+ "inner join s.praca pra_s "
@@ -224,6 +224,89 @@ public class PessoaDao {
 		}
 	}
 
+	
+	// requisito:**********************************
+	//int deve ser 0 para parametros nulos
+	//*********************************************
+	public List<Pessoa> getAllByPracaIdWherePracaDesejadaIdRelevante(int idPracaAtual, int idPracaDesejada ,
+			int idUnidadeDesejada, int idProcessoDesejado) {
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			String whereClause = null;
+			
+			// ambos parametros nulos
+			if (idUnidadeDesejada == 0 && idProcessoDesejado == 0) {
+				whereClause = "where "
+								+ "pra_p.idPraca = '"+ idPracaDesejada + "' "
+								+ "and "
+								+ "pra_s.idPraca = '"+ idPracaAtual + "' ";
+			}
+			// unidade nula apenas
+			else if(idUnidadeDesejada == 0) {
+				whereClause = "where "
+						+ "pra_p.idPraca = '"+ idPracaDesejada + "' "
+						+ "and "
+						+ "pra_s.idPraca = '"+ idPracaAtual + "' "
+						+ "and "
+						+ "cadeia.idCadeiaValorSubgrupo = '"+ idProcessoDesejado + "' ";
+			}
+			// processo nulo apenas
+			else if (idProcessoDesejado == 0) {
+				whereClause = "where "
+						+ "pra_p.idPraca = '"+ idPracaDesejada + "' "
+						+ "and "
+						+ "pra_s.idPraca = '"+ idPracaAtual + "' "
+						+ "and "
+						+ "u.idUnidade = '"+ idUnidadeDesejada + "' ";
+			}
+			// nenhum nulo : 
+			else {
+				whereClause = "where "
+						+ "pra_p.idPraca = '"+ idPracaDesejada + "' "
+						+ "and "
+						+ "pra_s.idPraca = '"+ idPracaAtual + "' "
+						+ "and "
+						+ "( "
+						+ "u.idUnidade = '"+ idUnidadeDesejada + "' "
+						+ "or "
+						+ "cadeia.idCadeiaValorSubgrupo = '"+ idProcessoDesejado + "' "
+						+ ") ";
+				
+			}
+			
+			//###########Localiza user na tabela users pelo loginName##############
+			List <Pessoa> listPessoa = session.createQuery(
+					"select distinct p "
+					+ "from SolicitacaoPermuta s "
+					+ "inner join s.pessoa p "
+					+ "inner join p.praca pra_p "
+					+ "inner join p.cadeiaValorSubgrupo cadeia "
+					+ "inner join p.componenteAdministrativo componente "
+					+ "inner join componente.unidade u "
+					+ "inner join s.praca pra_s "
+					
+					+ whereClause ).getResultList();
+			
+			
+			System.out.println("\n\ngetAllByPracaIdWherePracaDesejadaIdRelevante: pessoas de uma praça...  \n\n" +listPessoa);
+			session.getTransaction().commit();
+			return listPessoa;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+	}
+
+	
+	
 	public <S extends Pessoa> S save(S arg0) {
 		// TODO Auto-generated method stub
 		return null;

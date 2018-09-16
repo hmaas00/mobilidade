@@ -90,45 +90,40 @@
 					<td>Unidade:</td>
 					<td>${pessoa.componenteAdministrativo.unidade.nomeUnidade }</td>
 				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-				</tr>
-				<hr>
 			</tbody>
 		</table>
 
+		<hr>
 		<h3 class="text-center">Solicitações:</h3>
 		<br>
-		<c:forEach items="${permutas}" var="per" varStatus="i">
+		
+		<table class="table table-condensed">
+			<thead>
 
-			<table class="table table-condensed">
-				<thead>
+				<th></th>
+				<th>Praça desejada</th>
+				<th>Unidade desejada</th>
+				<th>Processo de trabalho desejado</th>
 
-					<th>Solicitação ${i.index + 1 }:</th>
-
-				</thead>
-				<tbody>
+			</thead>
+			<tbody>
+				<c:forEach items="${permutas}" var="per" varStatus="i">
 					<tr>
-						<td>Praça Desejada:</td>
+						<td>Solicitação ${i.index + 1 }:</td>
+
 						<td>${per.praca.nomePraca}</td>
-					</tr>
-					<tr>
-						<td>Unidade Desejada:</td>
 						<td>${per.unidade.nomeUnidade}</td>
-					</tr>
-					<tr>
-						<td>Processo de trabalho desejado:</td>
 						<td>${per.cadeiaValorSubgrupo.descricaoSubgrupo}</td>
 					</tr>
-				</tbody>
-			</table>
-			<hr>
-		</c:forEach>
+				</c:forEach>
+
+			</tbody>
+		</table>
+		<br>
+		<br>
+		<hr>
+		
+
 	</div>
 </body>
 </html>

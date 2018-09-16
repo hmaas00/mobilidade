@@ -64,7 +64,8 @@
 					<p class="text-center">
 						A qualquer momento você pode castrar suas solicitações nessa <a
 							href="${pageContext.request.contextPath}/solicitar-permuta">página.</a>
-					</li></p>
+					</li>
+					</p>
 
 
 
@@ -115,30 +116,58 @@
 						test="${ empty permutas[0].unidade.nomeUnidade or empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
 						<p>Quanto maiores as informações sobre o posto que você
 							deseja, maior será a relevância da sugestão do sistema.</p>
+
 					</c:if>
-					
+
 					<c:if
-							test="${ empty permutas[0].unidade.nomeUnidade and empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
-							<p>Para essa solicitação você definiu apenas a praça
-								desejada, dessa forma, só é possível lhe mostrar a lista de
-								pessoas que desejam permutar e estão atualmente nessa praça e
-								desejam vir para a sua.</p>
+						test="${ empty permutas[0].unidade.nomeUnidade and empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
+						<p>Para essa solicitação você definiu apenas a praça desejada,
+							dessa forma, só é possível lhe mostrar a lista de pessoas que
+							desejam permutar e estão atualmente nessa praça e desejam vir
+							para a sua.</p>
 
 
-							<form class="form-horizontal"
-								action="${pageContext.request.contextPath}/solicitantesDeUmaPraca">
-								<div class="form-group">
-									<input type="hidden" id="pracaAtual" name="pracaAtual"
-										value="${pracaAtualId}"> <input type="hidden"
-										id="pracaDesejada" name="pracaDesejada"
-										value="${ permutas[0].praca.idPraca}">
-									<div class="text-center">
-										<input type="submit" class="btn btn-primary"
-											value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} ">
-									</div>
+						<form class="form-horizontal"
+							action="${pageContext.request.contextPath}/solicitantesDeUmaPraca">
+							<div class="form-group">
+								<input type="hidden" id="pracaAtual" name="pracaAtual"
+									value="${pracaAtualId}"> <input type="hidden"
+									id="pracaDesejada" name="pracaDesejada"
+									value="${ permutas[0].praca.idPraca}">
+								<div class="text-center">
+									<input type="submit" class="btn btn-primary"
+										value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} ">
 								</div>
-							</form>
-						</c:if>
+							</div>
+						</form>
+					</c:if>
+
+
+					<c:if
+						test="${ not empty permutas[0].unidade.nomeUnidade or not empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
+						<p>Como você forneceu mais informações sobre essa solicitação,
+							o sistema poderá encontrar um par com mais afinidades.</p>
+
+
+						<form class="form-horizontal"
+							action="${pageContext.request.contextPath}/solicitantesDeUmaPracaRelevante">
+							<div class="form-group">
+								<input type="hidden" id="pracaAtual" name="pracaAtual"
+									value="${pracaAtualId}"> <input type="hidden"
+									id="pracaDesejada" name="pracaDesejada"
+									value="${ permutas[0].praca.idPraca}"> <input
+									type="hidden" id="unidadeDesejada" name="unidadeDesejada"
+									value="${ permutas[0].unidade.idUnidade}"> <input
+									type="hidden" id="processoDesejado" name="processoDesejado"
+									value="${ permutas[0].cadeiaValorSubgrupo.idCadeiaValorSubgrupo}">
+								<div class="text-center">
+									<input type="submit" class="btn btn-primary"
+										value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} com interesses convenientes">
+								</div>
+							</div>
+						</form>
+					</c:if>
+
 
 
 				</c:when>
@@ -214,6 +243,32 @@
 									<div class="text-center">
 										<input type="submit" class="btn btn-primary"
 											value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual} ">
+									</div>
+								</div>
+							</form>
+						</c:if>
+
+						<c:if
+							test="${ not empty permutas[i.index].unidade.nomeUnidade or not empty permutas[i.index].cadeiaValorSubgrupo.descricaoSubgrupo }">
+							<p>Como você forneceu mais informações sobre essa
+								solicitação, o sistema poderá encontrar um par com mais
+								afinidades.</p>
+
+
+							<form class="form-horizontal"
+								action="${pageContext.request.contextPath}/solicitantesDeUmaPracaRelevante">
+								<div class="form-group">
+									<input type="hidden" id="pracaAtual" name="pracaAtual"
+										value="${pracaAtualId}"> <input type="hidden"
+										id="pracaDesejada" name="pracaDesejada"
+										value="${ permutas[i.index].praca.idPraca}"> <input
+										type="hidden" id="unidadeDesejada" name="unidadeDesejada"
+										value="${ permutas[i.index].unidade.idUnidade}"> <input
+										type="hidden" id="processoDesejado" name="processoDesejado"
+										value="${ permutas[i.index].cadeiaValorSubgrupo.idCadeiaValorSubgrupo}">
+									<div class="text-center">
+										<input type="submit" class="btn btn-primary"
+											value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual} com interesses convenientes">
 									</div>
 								</div>
 							</form>
