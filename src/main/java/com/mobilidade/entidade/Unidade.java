@@ -22,7 +22,7 @@ public class Unidade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id_unidade")
-	private int idUnidade;
+	private int idUnidade = 0 ;
 
 	@Column(name="nome_unidade")
 	private String nomeUnidade;

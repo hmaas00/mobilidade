@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mobilidade.auxiliar.AvaliadorRelacaoSimetrica;
+import com.mobilidade.auxiliar.NodeRelevanciaSimetrica;
 import com.mobilidade.dao.PessoaDao;
 import com.mobilidade.entidade.Pessoa;
 
@@ -57,7 +58,9 @@ public class SolicitantesDeUmaPracaController {
 
 		return "solicitantes-de-uma-praca";
 	}
-
+	
+	//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	
 	// solicitantes que preencheram processo desejado ou unidade desejada
 	@GetMapping("/solicitantesDeUmaPracaRelevante")
 	public String showSolicitantesDeUmaPracaRelevante(HttpServletRequest request, Principal principal, Model model) {
@@ -122,16 +125,23 @@ public class SolicitantesDeUmaPracaController {
 
 		List<Pessoa> listSemLogado = AvaliadorRelacaoSimetrica.eliminarReflexividade(p, listPessoa);
 		
+		// novo: atribuir relevancia
 		
+		AvaliadorRelacaoSimetrica avaliador = new AvaliadorRelacaoSimetrica();
 		
+		avaliador.setListNodeRelevanciaSimetrica(listSemLogado, p);
+		
+		// atualizar a lista
+		
+		List<NodeRelevanciaSimetrica> listNodes = avaliador.getListNodeRelevanciaSimetrica();
 		
 		// set model
 		
 		
-		model.addAttribute("tamanho", listSemLogado.size());
-		model.addAttribute("pessoas", listSemLogado);
+		model.addAttribute("tamanho", listNodes.size());
+		model.addAttribute("pessoas", listNodes);
 
-		return "solicitantes-de-uma-praca";
+		return "solicitantes-de-uma-praca-relevancia";
 	}
 
 }

@@ -290,6 +290,26 @@ public class PessoaDao {
 					+ whereClause ).getResultList();
 			
 			
+			// forçar carregamento das solicitações dessas pessoas
+			
+			for(Pessoa p : listPessoa) {
+				for(SolicitacaoPermuta s : p.getListSolicitacaoPermuta()) {
+				
+					if(s.getCadeiaValorSubgrupo() != null) {
+					
+						s.getCadeiaValorSubgrupo().getIdCadeiaValorSubgrupo();
+					}
+					if(s.getUnidade() != null) {
+					
+						s.getUnidade().getIdUnidade();
+					}
+					
+					
+				}
+				
+			}
+			
+			
 			System.out.println("\n\ngetAllByPracaIdWherePracaDesejadaIdRelevante: pessoas de uma praça...  \n\n" +listPessoa);
 			session.getTransaction().commit();
 			return listPessoa;

@@ -23,7 +23,7 @@ public class CadeiaValorSubgrupo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id_cadeia_valor_subgrupo")
-	private int idCadeiaValorSubgrupo;
+	private int idCadeiaValorSubgrupo = 0;
 
 	@Column(name="descricao_subgrupo")
 	private String descricaoSubgrupo;

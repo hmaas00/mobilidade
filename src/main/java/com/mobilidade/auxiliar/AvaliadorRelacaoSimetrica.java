@@ -15,6 +15,23 @@ public class AvaliadorRelacaoSimetrica {
 	// retorno:
 	// lista de entrada sem a pessoa logada
 	
+	List <NodeRelevanciaSimetrica> listNodeRelevanciaSimetrica = null;
+	
+	public List<NodeRelevanciaSimetrica> getListNodeRelevanciaSimetrica() {
+		return listNodeRelevanciaSimetrica;
+	}
+
+	public void setListNodeRelevanciaSimetrica(List<Pessoa> listaEncontrados, Pessoa principal) {
+		
+		listNodeRelevanciaSimetrica = new ArrayList();
+		
+		for( Pessoa encontrado : listaEncontrados) {
+			
+			NodeRelevanciaSimetrica node = new NodeRelevanciaSimetrica(encontrado, principal);
+			listNodeRelevanciaSimetrica.add(node);
+		}
+	}
+
 	public static List <Pessoa> eliminarReflexividade(Pessoa principal, List<Pessoa> pessoas) {
 		
 		List <Pessoa> tempPessoas = pessoas;
