@@ -67,7 +67,7 @@
 				<table class="table table-condensed">
 					<thead>
 						<tr>
-							<th>Relevância</th>
+							<th>Reciprocidade</th>
 							<th>Nome</th>
 							<th>Praça</th>
 							<th>Unidade</th>

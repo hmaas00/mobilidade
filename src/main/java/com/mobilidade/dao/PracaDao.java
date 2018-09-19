@@ -48,7 +48,7 @@ public class PracaDao {
 			session.beginTransaction();
 			
 			
-			List <Praca>pracas = session.createQuery("from Praca p").getResultList();
+			List <Praca>pracas = session.createQuery("from Praca p order by p.nomePraca ").getResultList();
 			//localiza pessoa associada ao user
 			session.getTransaction().commit();
 			return pracas;

@@ -48,7 +48,7 @@ public class UnidadeDao {
 			session.beginTransaction();
 			
 			
-			List <Unidade> unidades = session.createQuery("from Unidade u").getResultList();
+			List <Unidade> unidades = session.createQuery("from Unidade u order by u.nomeUnidade").getResultList();
 			
 			session.getTransaction().commit();
 			return unidades;

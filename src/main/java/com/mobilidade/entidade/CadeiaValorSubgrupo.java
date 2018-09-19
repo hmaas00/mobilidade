@@ -83,7 +83,7 @@ public class CadeiaValorSubgrupo {
 
 	//to string
 	public String toString() {
-		return ("toString cadeia valor subgrupo: "+this.descricaoSubgrupo);
+		return ("toString cadeia valor subgrupo: "+this.descricaoSubgrupo +" fk: "+ cadeiaValorFk);
 	}
 
 

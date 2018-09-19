@@ -48,8 +48,8 @@ public class CadeiaValorSubgrupoDao {
 		try {
 			initDao();
 			session.beginTransaction();
-
-			List <CadeiaValorSubgrupo> list = session.createQuery("from CadeiaValorSubgrupo cad").getResultList();
+			//+ " order by  cad.cadeiaValorFk"
+			List <CadeiaValorSubgrupo> list = session.createQuery("from CadeiaValorSubgrupo cad order by  cad.cadeiaValorFk").getResultList();
 
 			System.out.println("\n\nCadeias de valor - subgrupos:\n" + list);
 			session.getTransaction().commit();
@@ -77,7 +77,7 @@ public class CadeiaValorSubgrupoDao {
 			
 			session.beginTransaction();
 			
-			String query = "from CadeiaValorSubgrupo cad where cad.idCadeiaValorSubgrupo= " + id;
+			String query = "from CadeiaValorSubgrupo cad where cad.idCadeiaValorSubgrupo= " + id ;
 
 			CadeiaValorSubgrupo cadeiaValorSubgrupo = (CadeiaValorSubgrupo)session
 					.createQuery( query ).uniqueResult();
