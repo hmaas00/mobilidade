@@ -96,15 +96,26 @@ public class SolicitantesDeUmaPracaController {
 		String idUnidadeDesejadaStr = request.getParameter("unidadeDesejada");
 		int idUnidadeDesejada = 0;
 
-		if(! idUnidadeDesejadaStr.equals("") ) {
-			idUnidadeDesejada = Integer.parseInt(idUnidadeDesejadaStr);
+		// Se existe unidade desejada
+		if( idUnidadeDesejadaStr != null) {
+			// se a unidade desejada não estiver 'em branco'
+			if(! idUnidadeDesejadaStr.equals("")) {
+				idUnidadeDesejada = Integer.parseInt(idUnidadeDesejadaStr);	
+			}
+			
 		}
 
 		String idProcessoDesejadoStr = request.getParameter("processoDesejado");
 		int idProcessoDesejado = 0;
 
-		if(! idProcessoDesejadoStr.equals("")) {
-			idProcessoDesejado = Integer.parseInt(idProcessoDesejadoStr);
+		// ! idProcessoDesejadoStr.equals("")
+		//se existe processo desejado
+		if( idProcessoDesejadoStr != null ) {
+			// se o processo desejado não estiver 'em branco'
+			if(! idProcessoDesejadoStr.equals("")) {
+				idProcessoDesejado = Integer.parseInt(idProcessoDesejadoStr);	
+			}
+			
 		}
 
 

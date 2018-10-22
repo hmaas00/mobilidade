@@ -128,7 +128,7 @@
 
 
 						<form class="form-horizontal"
-							action="${pageContext.request.contextPath}/solicitantesDeUmaPraca">
+							action="${pageContext.request.contextPath}/solicitantesDeUmaPracaRelevante">
 							<div class="form-group">
 								<input type="hidden" id="pracaAtual" name="pracaAtual"
 									value="${pracaAtualId}"> <input type="hidden"
@@ -234,7 +234,7 @@
 
 
 							<form class="form-horizontal"
-								action="${pageContext.request.contextPath}/solicitantesDeUmaPraca">
+								action="${pageContext.request.contextPath}/solicitantesDeUmaPracaRelevante">
 								<div class="form-group">
 									<input type="hidden" id="pracaAtual" name="pracaAtual"
 										value="${pracaAtualId}"> <input type="hidden"
