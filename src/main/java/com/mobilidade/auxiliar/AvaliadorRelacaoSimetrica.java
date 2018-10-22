@@ -1,6 +1,7 @@
 package com.mobilidade.auxiliar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.mobilidade.entidade.Pessoa;
@@ -18,6 +19,7 @@ public class AvaliadorRelacaoSimetrica {
 	List <NodeRelevanciaSimetrica> listNodeRelevanciaSimetrica = null;
 	
 	public List<NodeRelevanciaSimetrica> getListNodeRelevanciaSimetrica() {
+		Collections.sort(listNodeRelevanciaSimetrica);
 		return listNodeRelevanciaSimetrica;
 	}
 

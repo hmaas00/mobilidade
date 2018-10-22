@@ -3,7 +3,7 @@ package com.mobilidade.auxiliar;
 import com.mobilidade.entidade.Pessoa;
 import com.mobilidade.entidade.SolicitacaoPermuta;
 
-public class NodeRelevanciaSimetrica {
+public class NodeRelevanciaSimetrica implements Comparable<NodeRelevanciaSimetrica>{
 
 	public NodeRelevanciaSimetrica() {
 
@@ -21,7 +21,23 @@ public class NodeRelevanciaSimetrica {
 	private int relevancia = 0;
 
 
+	// COMPARABLE - ordem inversa de relevancia e crescente alfabética
+	public int compareTo( NodeRelevanciaSimetrica other) {
+	    
+		// se esse objeto for menor que o outro - considerando a relevancia
+		if(this.getRelevancia() < other.getRelevancia()) {
+			return 1;
+		}
+		// se esse objeto for maior que o outro - considerando a relevancia
+		if(this.getRelevancia() > other.getRelevancia()) {
+			return -1;
+		}
+		// se esses objetos forem iguais - considerando a relevancia
+		// desempatar pela comparação dos nomes das pessoas
+		return this.getP().getNomePessoa().compareTo(other.getP().getNomePessoa());
+	}
 
+	// GETs SETs
 
 	public int getRelevancia() {
 		return relevancia;
