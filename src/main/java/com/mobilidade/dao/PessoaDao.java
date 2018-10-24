@@ -99,11 +99,76 @@ public class PessoaDao {
 		return false;
 	}
 
-	public List <Pessoa> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	// TODO TESTE
+	// lista de todas as pessoas que possuem, ao menos, uma solicitação
+	public List <Pessoa> findAllComSolicitacao() {
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			//###########Localiza user na tabela users pelo loginName##############
+			List <Pessoa> listPessoa = session.createQuery(
+					"select distinct p "
+					+ "from Pessoa p "
+					+ "inner join p.componenteAdministrativo c "
+					+ "inner join c.unidade u "
+					+ "inner join p.listSolicitacaoPermuta s order by p.idPessoa").getResultList();
+			// força montagem das solicitações
+			for(Pessoa pes : listPessoa) {
+				for(SolicitacaoPermuta s : pes.getListSolicitacaoPermuta()) {
+					s.getPessoa();
+				}
+				pes.getListSolicitacaoPermuta();
+			}
+			session.getTransaction().commit();
+			return listPessoa;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
 	}
 
+
+	// TODO TESTE
+	// lista de todas as pessoas que possuem, ao menos, uma solicitação
+	public List <Pessoa> findAll() {
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			//###########Localiza user na tabela users pelo loginName##############
+			List <Pessoa> listPessoa = session.createQuery(
+					"select distinct p "
+					+ "from Pessoa p "
+					+ "inner join p.componenteAdministrativo c "
+					+ "inner join c.unidade u "
+					+ "inner join p.listSolicitacaoPermuta s order by p.idPessoa").getResultList();
+			// força montagem das solicitações
+			for(Pessoa pes : listPessoa) {
+				for(SolicitacaoPermuta s : pes.getListSolicitacaoPermuta()) {
+					s.getPessoa();
+				}
+				pes.getListSolicitacaoPermuta();
+			}
+			session.getTransaction().commit();
+			return listPessoa;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+	}
 
 	public Pessoa findById(int id) {
 		// TODO Auto-generated method stub
