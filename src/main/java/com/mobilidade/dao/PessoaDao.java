@@ -326,6 +326,7 @@ public class PessoaDao {
 						+ "and "
 						+ "u.idUnidade = '"+ idUnidadeDesejada + "' ";
 			}
+			//TODO
 			// nenhum nulo : 
 			else {
 				whereClause = "where "
@@ -335,7 +336,7 @@ public class PessoaDao {
 						+ "and "
 						+ "( "
 						+ "u.idUnidade = '"+ idUnidadeDesejada + "' "
-						+ "or "
+						+ "and "
 						+ "cadeia.idCadeiaValorSubgrupo = '"+ idProcessoDesejado + "' "
 						+ ") ";
 				

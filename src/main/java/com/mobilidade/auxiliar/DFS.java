@@ -2,6 +2,7 @@ package com.mobilidade.auxiliar;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 
@@ -29,6 +30,12 @@ public class DFS {
 	private List <NodeCircular> listaGeral = null;
 	// GETS E SETS
 	public List getListaRelacoes() {
+		
+		if(listaRelacoes == null) {
+			return null;
+		}		
+		
+		ordenaListaRelacoes();
 		return listaRelacoes;
 	}
 
@@ -71,6 +78,26 @@ public class DFS {
 				return n;
 			}
 		}
+		return null;
+	}
+	
+	// ordenar lista de relacoes pelo tamanho das relacoes: 2 pessoas, 3 pessoas...
+	public List ordenaListaRelacoes() {
+		
+		Collections.sort(listaRelacoes, new Comparator<ArrayList>() {
+
+	        public int compare(ArrayList a, ArrayList b) {
+	            // 
+	        	if(a.size() > b.size()) {
+	        		return 1;
+	        	}
+	        	else if(a.size() < b.size()) {
+	        		return -1;
+	        	}
+	        	// tamanhos iguais
+	        		return 0; 
+	        }
+	    });
 		return null;
 	}
 	
@@ -122,9 +149,6 @@ public class DFS {
 				stack.pop();
 			}
 		}
-		for(int k = 0 ; k < this.getListaRelacoes().size(); k++) {
-			System.out.println(this.getListaRelacoes().get(k));
-		}
 	}
 	
 	public void visitDFS( NodeCircular n, int t, Stack <NodeCircular> antecessores) {
@@ -134,6 +158,7 @@ public class DFS {
 		// sua profundidade deve ser maior que o timer, se ele nunca tiver participado de uma relacao de sucesso
 		// caso já tenha tido sucesso: a soma de sua profundidade com os passos necessários para chegar ao final
 		// deve ser menor ou igual a profundidade maxima avaliada
+		// o timer deve ser menor que a profundidade maxima avaliada
 		if( (n.getProfundidade() > t || (t + n.getChegaEm() <= this.MAX_PROFUND ) ) && t < this.MAX_PROFUND) {
 			n.setProfundidade(t);
 //			Collections.copy(n.getRelacao(), antecessores);
@@ -151,12 +176,23 @@ public class DFS {
 					// avaliar se esse no e o ator - sucesso
 					if(nodeAux.getP().getIdPessoa() == nodeAtor.getP().getIdPessoa()) {
 						System.out.println("sucesso");
-						antecessores.push(n);
-						ArrayList  listRelacao = new ArrayList();
-						for(NodeCircular nodeSucesso : antecessores) {
-							listRelacao.add(nodeSucesso);
+						antecessores.push(n); // empilha no atual na lista de antecessores
+						ArrayList  listRelacao = new ArrayList(); // montar a relacao de sucesso
+						int marcador = antecessores.size(); // temos que marcar os nos que chegam!
+						for(NodeCircular nodeSucesso : antecessores) { 
+							if(nodeSucesso.getChegaEm() > marcador) { // vamos atualizar o 'chega em'
+								nodeSucesso.setChegaEm(marcador);  // consegue chegar em menos passos
+							}
+							marcador--;
+							listRelacao.add(nodeSucesso); // adicionar cada antecessor na relacao de sucesso
 						}
-						listaRelacoes.add( listRelacao);
+						
+						// Se a lista for nova
+						if(  !  listaRelacoes.contains(listRelacao)) {
+							System.out.println("contido!!!");
+							listaRelacoes.add( listRelacao);
+						}
+						// desempilha o no atual da lista de antecessores
 						antecessores.pop();
 					}
 					else {
@@ -168,4 +204,71 @@ public class DFS {
 			}
 		}
 	}
+	
+	// retorna uma lista de listas com 2 elementos
+	public List getListasSimetricas() {
+		
+		ArrayList lista = new ArrayList();
+		
+		List simetricas = new ArrayList();
+		
+		for(int i = 0 ; i < listaRelacoes.size() ; i++) {
+			lista = (ArrayList)listaRelacoes.get(i);
+			
+			if( lista.size() == 2) {
+				simetricas.add(lista);
+			}
+		}
+		return simetricas;
+	}
+	
+	// retorna uma lista de listas com 3 elementos
+		public List getListasTriangulares() {
+			
+			ArrayList lista = new ArrayList();
+			
+			List triangulares = new ArrayList();
+			
+			for(int i = 0 ; i < listaRelacoes.size() ; i++) {
+				lista = (ArrayList)listaRelacoes.get(i);
+				
+				if( lista.size() == 3) {
+					triangulares.add(lista);
+				}
+			}
+			return triangulares;
+		}
+		
+		// retorna uma lista de listas com 4 elementos
+		public List getListasQuadrangulares() {
+			
+			ArrayList lista = new ArrayList();
+			
+			List quadrangulares = new ArrayList();
+			
+			for(int i = 0 ; i < listaRelacoes.size() ; i++) {
+				lista = (ArrayList)listaRelacoes.get(i);
+				
+				if( lista.size() == 4) {
+					quadrangulares.add(lista);
+				}
+			}
+			return quadrangulares;
+		}
+		// retorna uma lista de listas com 5 elementos
+		public List getListasPentangulares() {
+			
+			ArrayList lista = new ArrayList();
+			
+			List pentangulares = new ArrayList();
+			
+			for(int i = 0 ; i < listaRelacoes.size() ; i++) {
+				lista = (ArrayList)listaRelacoes.get(i);
+				
+				if( lista.size() == 5) {
+					pentangulares.add(lista);
+				}
+			}
+			return pentangulares;
+		}
 }

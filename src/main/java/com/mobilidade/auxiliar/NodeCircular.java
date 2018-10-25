@@ -91,6 +91,7 @@ public class NodeCircular {
 		for(SolicitacaoPermuta sol : p.getListSolicitacaoPermuta()) {
 			// avaliar premissa: ha processo desejado ou unidade desejada na solicitação
 			if(sol.getCadeiaValorSubgrupo() != null || sol.getUnidade() != null) {
+				//TODO
 				listOfListAdj.add(criaListaAdjacencias( p, sol, listaGeral ));
 			}
 		}
@@ -132,9 +133,10 @@ public class NodeCircular {
 						}
 					}
 					// se nenhum for nulo, é porque possui ambos
+					//TODO
 					else {
 						if(p.getP().getCadeiaValorSubgrupo().getIdCadeiaValorSubgrupo() == sol.getCadeiaValorSubgrupo().getIdCadeiaValorSubgrupo()
-								||
+								&&
 								p.getP().getComponenteAdministrativo().getUnidade().getIdUnidade() == sol.getUnidade().getIdUnidade()) {
 							auxList.add(p);
 						}

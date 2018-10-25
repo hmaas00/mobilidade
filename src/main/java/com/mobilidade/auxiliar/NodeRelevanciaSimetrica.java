@@ -66,13 +66,13 @@ public class NodeRelevanciaSimetrica implements Comparable<NodeRelevanciaSimetri
 				if(sol.getCadeiaValorSubgrupo().getIdCadeiaValorSubgrupo() ==
 						principal.getCadeiaValorSubgrupo().getIdCadeiaValorSubgrupo()) {
 
-					relevancia+= 50;
+					relevancia+= 1;
 
 				}
 				if(sol.getUnidade().getIdUnidade() ==
 						principal.getComponenteAdministrativo().getUnidade().getIdUnidade()) {
 
-					relevancia+= 50;
+					relevancia+= 1;
 
 				}
 
@@ -83,7 +83,7 @@ public class NodeRelevanciaSimetrica implements Comparable<NodeRelevanciaSimetri
 				if(sol.getCadeiaValorSubgrupo().getIdCadeiaValorSubgrupo() ==
 						principal.getCadeiaValorSubgrupo().getIdCadeiaValorSubgrupo()) {
 
-					relevancia+= 50;
+					relevancia+= 1;
 
 				}
 				// tem só unidade desejada
@@ -92,7 +92,7 @@ public class NodeRelevanciaSimetrica implements Comparable<NodeRelevanciaSimetri
 				if(sol.getUnidade().getIdUnidade() ==
 						principal.getComponenteAdministrativo().getUnidade().getIdUnidade()) {
 
-					relevancia+= 50;
+					relevancia+= 1;
 
 				}
 			}

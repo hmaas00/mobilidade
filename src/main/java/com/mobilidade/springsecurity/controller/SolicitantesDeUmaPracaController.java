@@ -11,12 +11,103 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mobilidade.auxiliar.AvaliadorRelacaoSimetrica;
+import com.mobilidade.auxiliar.DFS;
 import com.mobilidade.auxiliar.NodeRelevanciaSimetrica;
 import com.mobilidade.dao.PessoaDao;
 import com.mobilidade.entidade.Pessoa;
 
 @Controller
 public class SolicitantesDeUmaPracaController {
+
+
+
+	@GetMapping("/todosOutrosSolicitantes")
+	public String showTodosOutrosSolicitantes(HttpServletRequest request, Principal principal, Model model) {
+
+		// pegar a pessoa do usuario logado
+		//login name
+		String ln = principal.getName();
+
+		System.out.println("SolicitantesDeUmaPracaController-permuta: principal - " + ln);
+		//dao Pessoa
+		PessoaDao pesDao = new PessoaDao();
+
+		Pessoa p = pesDao.findByLoginName(ln);
+
+		// buscar no bd todos os solicitantes com solicitações!
+
+		List <Pessoa> listPessoa = 
+				pesDao.findAllComSolicitacao();
+
+		// eliminar o proprio usuario logado da lista
+
+		List<Pessoa> listSemLogado = AvaliadorRelacaoSimetrica.eliminarReflexividade(p, listPessoa);
+
+		// novo: atribuir relevancia
+
+		AvaliadorRelacaoSimetrica avaliador = new AvaliadorRelacaoSimetrica();
+
+		avaliador.setListNodeRelevanciaSimetrica(listSemLogado, p);
+
+		// atualizar a lista
+
+		List<NodeRelevanciaSimetrica> listNodes = avaliador.getListNodeRelevanciaSimetrica();
+
+		// set model
+
+
+		model.addAttribute("tamanho", listNodes.size());
+		model.addAttribute("pessoas", listNodes);
+
+		return "solicitantes-de-uma-praca-relevancia";
+
+	}
+
+
+	@GetMapping("/processaDFS")
+	public String showBuscaDFS(HttpServletRequest request, Principal principal, Model model) {
+
+		// pegar a pessoa do usuario logado
+		//login name
+		String ln = principal.getName();
+
+		//dao Pessoa
+		PessoaDao pesDao = new PessoaDao();
+
+		Pessoa p = pesDao.findByLoginName(ln);
+		
+		DFS dfs = new DFS();
+		
+		dfs.startDFS(p);
+		
+		List relacoes = dfs.getListaRelacoes();
+		
+		List simetricas = dfs.getListasSimetricas();
+		List triangulares = dfs.getListasTriangulares();
+		List quadrangulares = dfs.getListasQuadrangulares();
+		List pentangulares = dfs.getListasPentangulares();
+		
+		boolean possuiSimetricas = (simetricas.size() > 0);
+		boolean possuiTriangulares = (triangulares.size() > 0);
+		boolean possuiQuadrangulares = (quadrangulares.size() > 0);
+		boolean possuiPentangulares = ( pentangulares.size() > 0);
+		
+		model.addAttribute("tamanho", relacoes.size());
+		model.addAttribute("relacoes", relacoes);
+		
+		model.addAttribute("possuiSimetricas", possuiSimetricas);
+		model.addAttribute("possuiTriangulares", possuiTriangulares);
+		model.addAttribute("possuiQuadrangulares", possuiQuadrangulares);
+		model.addAttribute("possuiPentangulares", possuiPentangulares);
+		
+		model.addAttribute("simetricas", simetricas);
+		model.addAttribute("triangulares", triangulares);
+		model.addAttribute("quadrangulares", quadrangulares);
+		model.addAttribute("pentangulares", pentangulares);
+
+		return "busca-circular";
+	}
+
 
 	@GetMapping("/solicitantesDeUmaPraca")
 	public String showSolicitantesDeUmaPraca(HttpServletRequest request, Principal principal, Model model) {
@@ -58,9 +149,9 @@ public class SolicitantesDeUmaPracaController {
 
 		return "solicitantes-de-uma-praca";
 	}
-	
+
 	//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-	
+
 	// solicitantes que preencheram processo desejado ou unidade desejada
 	@GetMapping("/solicitantesDeUmaPracaRelevante")
 	public String showSolicitantesDeUmaPracaRelevante(HttpServletRequest request, Principal principal, Model model) {
@@ -102,7 +193,7 @@ public class SolicitantesDeUmaPracaController {
 			if(! idUnidadeDesejadaStr.equals("")) {
 				idUnidadeDesejada = Integer.parseInt(idUnidadeDesejadaStr);	
 			}
-			
+
 		}
 
 		String idProcessoDesejadoStr = request.getParameter("processoDesejado");
@@ -115,7 +206,7 @@ public class SolicitantesDeUmaPracaController {
 			if(! idProcessoDesejadoStr.equals("")) {
 				idProcessoDesejado = Integer.parseInt(idProcessoDesejadoStr);	
 			}
-			
+
 		}
 
 
@@ -128,27 +219,27 @@ public class SolicitantesDeUmaPracaController {
 
 		//System.out.println("SolicitantesDeUmaPracaController - teste lista" + listPessoa.get(0).getPraca().getNomePraca());
 
-		
-		
-		
+
+
+
 		// eliminar o proprio usuario logado da lista
 
 
 		List<Pessoa> listSemLogado = AvaliadorRelacaoSimetrica.eliminarReflexividade(p, listPessoa);
-		
+
 		// novo: atribuir relevancia
-		
+
 		AvaliadorRelacaoSimetrica avaliador = new AvaliadorRelacaoSimetrica();
-		
+
 		avaliador.setListNodeRelevanciaSimetrica(listSemLogado, p);
-		
+
 		// atualizar a lista
-		
+
 		List<NodeRelevanciaSimetrica> listNodes = avaliador.getListNodeRelevanciaSimetrica();
-		
+
 		// set model
-		
-		
+
+
 		model.addAttribute("tamanho", listNodes.size());
 		model.addAttribute("pessoas", listNodes);
 

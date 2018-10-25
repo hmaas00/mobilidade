@@ -36,6 +36,8 @@
 					data-toggle="dropdown" href="#">Permuta<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a
+							href="${pageContext.request.contextPath}/todosOutrosSolicitantes">Visualizar todos os outros solicitantes de permuta</a></li>
+						<li><a
 							href="${pageContext.request.contextPath}/solicitar-permuta">Solicitação
 								de permuta</a></li>
 						<security:authorize access="hasRole('DEPES')">
@@ -63,6 +65,7 @@
 				<div class="jumbotron">
 					<p class="text-center">Foram encontrados ${tamanho}
 						solicitante(s).</p>
+						<p class="text-center">Cada menção à sua unidade ou processo de trabalho atribui 1 ponto de <b>reciprocidade</b>.</p>
 				</div>
 				<table class="table table-condensed">
 					<thead>
@@ -80,23 +83,18 @@
 							<tr>
 
 								<c:choose>
-
-
-									<c:when test="${pes.relevancia < 50 }">
-
+									<c:when test="${pes.relevancia < 1 }">
 										<td class="text-danger">${pes.relevancia}</td>
 									</c:when>
-
-									<c:when test="${pes.relevancia < 100 }">
-
+									<c:when test="${pes.relevancia < 2 }">
 										<td class="text-warning">${pes.relevancia}</td>
 									</c:when>
-
-									<c:when test="${pes.relevancia < 1000 }">
-										<td class="text-success">${pes.relevancia}</td>
-
+									<c:when test="${pes.relevancia < 3 }">
+										<td class="text-primary">${pes.relevancia}</td>
 									</c:when>
-
+									<c:otherwise>
+										<td class="text-success">${pes.relevancia}</td>
+									</c:otherwise>
 								</c:choose>
 
 

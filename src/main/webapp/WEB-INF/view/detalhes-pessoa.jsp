@@ -36,6 +36,9 @@
 					data-toggle="dropdown" href="#">Permuta<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a
+							href="${pageContext.request.contextPath}/todosOutrosSolicitantes">Visualizar
+								todos os outros solicitantes de permuta</a></li>
+						<li><a
 							href="${pageContext.request.contextPath}/solicitar-permuta">Solicitação
 								de permuta</a></li>
 						<security:authorize access="hasRole('DEPES')">
@@ -96,7 +99,7 @@
 		<hr>
 		<h3 class="text-center">Solicitações:</h3>
 		<br>
-		
+
 		<table class="table table-condensed">
 			<thead>
 
@@ -119,10 +122,9 @@
 
 			</tbody>
 		</table>
-		<br>
-		<br>
+		<br> <br>
 		<hr>
-		
+
 
 	</div>
 </body>

@@ -22,6 +22,9 @@ public class TestCrud {
 		NodeCircular node = new NodeCircular();
 		NodeCircular nodeAux = new NodeCircular();
 		
+//		node.setP( pesDao.findByLoginName("harlanm"));
+//		node.setP( pesDao.findByLoginName("alexandref"));
+		
 		node.setP( pesDao.findByLoginName("harlanm"));
 		
 		node.fillAdjLists( dfs.getListaGeral());
@@ -39,6 +42,14 @@ public class TestCrud {
 		System.out.println(i + " " +  ar.get(0));
 		*/
 		 dfs.startDFS(node.getP());
+		 
+		 
+		for(int k = 0 ; k < dfs.getListaRelacoes().size(); k++) {
+			System.out.println(dfs.getListaRelacoes().get(k));
+		}
+		System.out.println("fim");
+		 
+		 
 
 	}
 		

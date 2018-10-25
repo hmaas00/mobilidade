@@ -36,6 +36,9 @@
 					data-toggle="dropdown" href="#">Permuta<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a
+							href="${pageContext.request.contextPath}/todosOutrosSolicitantes">Visualizar
+								todos os outros solicitantes de permuta</a></li>
+						<li><a
 							href="${pageContext.request.contextPath}/solicitar-permuta">Solicitação
 								de permuta</a></li>
 						<security:authorize access="hasRole('DEPES')">
@@ -67,16 +70,27 @@
 					</li>
 					</p>
 
-
-
-
-
 				</c:when>
 
 
 				<c:when test="${quantidade == 1}">
 					<p class="text-center">
 						Você cadastrou <strong>uma</strong> solicitação de permuta:
+					</p>
+					<hr>
+					<p class="text-center">
+						Você informou que seu processo de trabalho <strong>atual</strong>
+						na cadeia de valor é: <strong>${processo}.</strong>
+					</p>
+					<p class="text-center">Outros solicitantes que desejem realizar
+						esse processo na cadeia de valor poderão encontrá-lo.</p>
+					<p class="text-center">
+						Seu <strong>motivo principal</strong> para tentar uma permuta foi:
+						<strong>"${motivo}".</strong>
+					</p>
+					<p class="text-center">
+						Essa informação será visível <strong>somente pelo DEPES</strong> e
+						será usada para estudos das movimentações internas.
 					</p>
 					<br>
 					<p>
@@ -85,8 +99,7 @@
 					<c:choose>
 						<c:when test="${empty permutas[0].unidade.nomeUnidade }">
 							<p>
-								<strong>Unidade desejada:</strong> Você não informou nenhuma
-								unidade para essa solicitação.
+								<strong>Unidade desejada:</strong> Não informada.
 							</p>
 						</c:when>
 						<c:otherwise>
@@ -101,8 +114,7 @@
 						<c:when
 							test="${empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
 							<p>
-								<strong>Processo de trabalho desejado:</strong> Você não
-								informou nenhum processo de trabalho.
+								<strong>Processo de trabalho desejado:</strong> Não informado.
 							</p>
 						</c:when>
 						<c:otherwise>
@@ -115,16 +127,18 @@
 					<c:if
 						test="${ empty permutas[0].unidade.nomeUnidade or empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
 						<p>Quanto maiores as informações sobre o posto que você
-							deseja, maior será a relevância da sugestão do sistema.</p>
+							deseja, maior será a chance do sistema encontrar uma relação
+							circular significativa envolvendo você e maior será a
+							reciprocidade que os outros solicitantes irão ver em você.</p>
 
 					</c:if>
 
 					<c:if
 						test="${ empty permutas[0].unidade.nomeUnidade and empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
-						<p>Para essa solicitação você definiu apenas a praça desejada,
+						<p>Para esta solicitação você definiu apenas a praça desejada,
 							dessa forma, só é possível lhe mostrar a lista de pessoas que
-							desejam permutar e estão atualmente nessa praça e desejam vir
-							para a sua.</p>
+							desejam permutar e estão atualmente nesta praça e desejam vir
+							para a sua. Esta solicitação será ignorada em buscas circulares.</p>
 
 
 						<form class="form-horizontal"
@@ -145,8 +159,9 @@
 
 					<c:if
 						test="${ not empty permutas[0].unidade.nomeUnidade or not empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
-						<p>Como você forneceu mais informações sobre essa solicitação,
-							o sistema poderá encontrar um par com mais afinidades.</p>
+						<p>Como você forneceu unidade desejada ou processo de trabalho
+							desejado, esta solicitação poderá participar de relações
+							circulares.</p>
 
 
 						<form class="form-horizontal"
@@ -162,10 +177,21 @@
 									value="${ permutas[0].cadeiaValorSubgrupo.idCadeiaValorSubgrupo}">
 								<div class="text-center">
 									<input type="submit" class="btn btn-primary"
-										value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} com interesses convenientes">
+										value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} filtrados pela sua solicitação">
 								</div>
 							</div>
 						</form>
+						<form class="form-horizontal"
+								action="${pageContext.request.contextPath}/processaDFS">
+								<div class="form-group">
+									<input type="hidden" id="idPessoa" name="idPessoa"
+										value="${pracaAtualId}"> 
+									<div class="text-center">
+										<input type="submit" class="btn btn-success"
+											value="Buscar circular de relações">
+									</div>
+								</div>
+							</form>
 					</c:if>
 
 
@@ -177,6 +203,24 @@
 						Você cadastrou <strong>${quantidade}</strong> solicitações de
 						permuta.
 					</p>
+					<hr>
+					<p class="text-center">
+						Você informou que seu processo de trabalho <strong>atual</strong>
+						na cadeia de valor é: <strong>${processo}.</strong>
+					</p>
+					<p class="text-center">Outros solicitantes que desejem realizar
+						esse processo na cadeia de valor poderão encontrá-lo.</p>
+					<p class="text-center">
+						Seu <strong>motivo principal</strong> para tentar uma permuta foi:
+						<strong>"${motivo}".</strong>
+					</p>
+					<p class="text-center">
+						Essa informação será visível <strong>somente pelo DEPES</strong> e
+						será usada para estudos das movimentações internas.
+					</p>
+				
+					<hr>
+
 					<c:forEach items="${permutas}" var="permuta" varStatus="i">
 						<p>
 							<strong>Solicitação ${i.index + 1}:</strong>
@@ -193,8 +237,7 @@
 						<c:choose>
 							<c:when test="${empty permutas[i.index].unidade.nomeUnidade }">
 								<p>
-									<strong>Unidade desejada:</strong> Você não informou nenhuma
-									unidade para essa solicitação.
+									<strong>Unidade desejada:</strong> Não informada.
 								</p>
 							</c:when>
 							<c:otherwise>
@@ -209,8 +252,7 @@
 							<c:when
 								test="${empty permutas[i.index].cadeiaValorSubgrupo.descricaoSubgrupo }">
 								<p>
-									<strong>Processo de trabalho desejado:</strong> Você não
-									informou nenhum processo de trabalho.
+									<strong>Processo de trabalho desejado:</strong> Não informado.
 								</p>
 							</c:when>
 							<c:otherwise>
@@ -223,14 +265,17 @@
 						<c:if
 							test="${ empty permutas[i.index].unidade.nomeUnidade or empty permutas[i.index].cadeiaValorSubgrupo.descricaoSubgrupo }">
 							<p>Quanto maiores as informações sobre o posto que você
-								deseja, maior será a relevância da sugestão do sistema.</p>
+								deseja, maior será a chance do sistema encontrar uma relação
+								circular significativa envolvendo você e maior será a
+								reciprocidade que os outros solicitantes irão ver em você.</p>
 						</c:if>
 						<c:if
 							test="${ empty permutas[i.index].unidade.nomeUnidade and empty permutas[i.index].cadeiaValorSubgrupo.descricaoSubgrupo }">
-							<p>Para essa solicitação você definiu apenas a praça
+							<p>Para esta solicitação você definiu apenas a praça
 								desejada, dessa forma, só é possível lhe mostrar a lista de
 								pessoas que desejam permutar e estão atualmente nessa praça e
-								desejam vir para a sua.</p>
+								desejam vir para a sua. Esta solicitação será ignorada em buscas
+								circulares.</p>
 
 
 							<form class="form-horizontal"
@@ -250,9 +295,9 @@
 
 						<c:if
 							test="${ not empty permutas[i.index].unidade.nomeUnidade or not empty permutas[i.index].cadeiaValorSubgrupo.descricaoSubgrupo }">
-							<p>Como você forneceu mais informações sobre essa
-								solicitação, o sistema poderá encontrar um par com mais
-								afinidades.</p>
+							<p>Como você forneceu unidade desejada ou processo de
+								trabalho desejado, esta solicitação poderá participar de
+								relações circulares.</p>
 
 
 							<form class="form-horizontal"
@@ -268,7 +313,18 @@
 										value="${ permutas[i.index].cadeiaValorSubgrupo.idCadeiaValorSubgrupo}">
 									<div class="text-center">
 										<input type="submit" class="btn btn-primary"
-											value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual} com interesses convenientes">
+											value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual} filtrados pela sua solicitação">
+									</div>
+								</div>
+							</form>
+							<form class="form-horizontal"
+								action="${pageContext.request.contextPath}/processaDFS">
+								<div class="form-group">
+									<input type="hidden" id="idPessoa" name="idPessoa"
+										value="${pracaAtualId}"> 
+									<div class="text-center">
+										<input type="submit" class="btn btn-success"
+											value="Buscar circular de relações">
 									</div>
 								</div>
 							</form>
@@ -282,30 +338,6 @@
 
 				</c:otherwise>
 			</c:choose>
-
-
-
-
-			<c:if test="${quantidade > 0}">
-				<hr>
-				<p class="text-center">
-					Você informou que seu processo de trabalho <strong>atual</strong>
-					na cadeia de valor é: <strong>${processo}.</strong>
-				</p>
-				<p class="text-center">Essa informação é importante porque vai
-					ajudar a aumentar a relevância das sugestões do sistema no caso em
-					que outros solicitantes estiverem desejando realizar essa processo.</p>
-				<p class="text-center">
-					Seu <strong>motivo principal</strong> para tentar uma permuta foi:
-					<strong>"${motivo}".</strong>
-				</p>
-				<p class="text-center">
-					Essa informação será visível <strong>somente pelo DEPES</strong> e
-					será usada para estudos das movimentações internas.
-				</p>
-			</c:if>
-
-
 
 		</div>
 	</div>
