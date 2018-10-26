@@ -92,7 +92,32 @@
 						Essa informação será visível <strong>somente pelo DEPES</strong> e
 						será usada para estudos das movimentações internas.
 					</p>
-					<br>
+					<hr>
+					<c:if test="${permitirBuscaCircular}">
+						<p>Como você forneceu unidade desejada ou processo de trabalho
+							desejado para esta solicitação de permuta, você poderá participar
+							de relações circulares envolvendo esta solicitação. Todas as
+							relações possíveis serão avaliadas, desde relações simétricas
+							entre dois solicitantes de permuta até relações pentangulares,
+							envolvendo cinco solicitantes que poderiam permutar em uma ordem
+							específica.</p>
+						<hr>
+
+
+						<form class="form-horizontal"
+							action="${pageContext.request.contextPath}/processaDFS">
+							<div class="form-group">
+								<input type="hidden" id="idPessoa" name="idPessoa"
+									value="${pracaAtualId}">
+								<div class="text-center">
+									<input type="submit" class="btn btn-success"
+										value="Buscar circular de relações">
+								</div>
+							</div>
+						</form>
+						<hr>
+					</c:if>
+
 					<p>
 						<strong>Praça desejada:</strong> ${permutas[0].praca.nomePraca }
 					</p>
@@ -149,8 +174,20 @@
 									id="pracaDesejada" name="pracaDesejada"
 									value="${ permutas[0].praca.idPraca}">
 								<div class="text-center">
-									<input type="submit" class="btn btn-primary"
-										value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} ">
+									<c:choose>
+										<c:when test="${ permutas[0].praca.nomePraca == pracaAtual }">
+
+											<input type="submit" class="btn btn-primary"
+												value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram permanecer na praça">
+
+
+										</c:when>
+										<c:otherwise>
+											<input type="submit" class="btn btn-primary"
+												value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual}">
+
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 						</form>
@@ -159,9 +196,7 @@
 
 					<c:if
 						test="${ not empty permutas[0].unidade.nomeUnidade or not empty permutas[0].cadeiaValorSubgrupo.descricaoSubgrupo }">
-						<p>Como você forneceu unidade desejada ou processo de trabalho
-							desejado, esta solicitação poderá participar de relações
-							circulares.</p>
+
 
 
 						<form class="form-horizontal"
@@ -176,22 +211,23 @@
 									type="hidden" id="processoDesejado" name="processoDesejado"
 									value="${ permutas[0].cadeiaValorSubgrupo.idCadeiaValorSubgrupo}">
 								<div class="text-center">
-									<input type="submit" class="btn btn-primary"
-										value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} filtrados pela sua solicitação">
+									<c:choose>
+										<c:when test="${ permutas[0].praca.nomePraca == pracaAtual }">
+
+											<input type="submit" class="btn btn-primary"
+												value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram permanecer na praça filtrados pela sua solicitação">
+
+
+										</c:when>
+										<c:otherwise>
+											<input type="submit" class="btn btn-primary"
+												value="Buscar servidores de ${ permutas[0].praca.nomePraca} que queiram vir para ${pracaAtual} filtrados pela sua solicitação">
+
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 						</form>
-						<form class="form-horizontal"
-								action="${pageContext.request.contextPath}/processaDFS">
-								<div class="form-group">
-									<input type="hidden" id="idPessoa" name="idPessoa"
-										value="${pracaAtualId}"> 
-									<div class="text-center">
-										<input type="submit" class="btn btn-success"
-											value="Buscar circular de relações">
-									</div>
-								</div>
-							</form>
 					</c:if>
 
 
@@ -218,8 +254,37 @@
 						Essa informação será visível <strong>somente pelo DEPES</strong> e
 						será usada para estudos das movimentações internas.
 					</p>
-				
+
 					<hr>
+
+					<c:if test="${permitirBuscaCircular}">
+						<p>Como você forneceu unidade desejada ou processo de trabalho
+							desejado em, ao menos, uma de suas solicitações de permuta, você
+							poderá participar de relações circulares envolvendo essas
+							solicitações. Todas as relações possíveis serão avaliadas, desde
+							relações simétricas entre dois solicitantes de permuta até
+							relações pentangulares, envolvendo cinco solicitantes que
+							poderiam permutar em uma ordem específica.</p>
+
+						<hr>
+
+						<form class="form-horizontal"
+							action="${pageContext.request.contextPath}/processaDFS">
+							<div class="form-group">
+								<input type="hidden" id="idPessoa" name="idPessoa"
+									value="${pracaAtualId}">
+								<div class="text-center">
+									<input type="submit" class="btn btn-success"
+										value="Buscar circular de relações">
+								</div>
+							</div>
+						</form>
+						<hr>
+
+
+
+					</c:if>
+
 
 					<c:forEach items="${permutas}" var="permuta" varStatus="i">
 						<p>
@@ -286,8 +351,25 @@
 										id="pracaDesejada" name="pracaDesejada"
 										value="${ permutas[i.index].praca.idPraca}">
 									<div class="text-center">
-										<input type="submit" class="btn btn-primary"
-											value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual} ">
+
+
+										<c:choose>
+											<c:when
+												test="${ permutas[i.index].praca.nomePraca == pracaAtual }">
+
+												<input type="submit" class="btn btn-primary"
+													value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram permanecer na praça">
+
+
+											</c:when>
+											<c:otherwise>
+												<input type="submit" class="btn btn-primary"
+													value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual}">
+
+											</c:otherwise>
+										</c:choose>
+
+
 									</div>
 								</div>
 							</form>
@@ -312,19 +394,25 @@
 										type="hidden" id="processoDesejado" name="processoDesejado"
 										value="${ permutas[i.index].cadeiaValorSubgrupo.idCadeiaValorSubgrupo}">
 									<div class="text-center">
-										<input type="submit" class="btn btn-primary"
-											value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual} filtrados pela sua solicitação">
-									</div>
-								</div>
-							</form>
-							<form class="form-horizontal"
-								action="${pageContext.request.contextPath}/processaDFS">
-								<div class="form-group">
-									<input type="hidden" id="idPessoa" name="idPessoa"
-										value="${pracaAtualId}"> 
-									<div class="text-center">
-										<input type="submit" class="btn btn-success"
-											value="Buscar circular de relações">
+
+
+										<c:choose>
+											<c:when
+												test="${ permutas[i.index].praca.nomePraca == pracaAtual }">
+
+												<input type="submit" class="btn btn-primary"
+													value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram permanecer na praça filtrados pela sua solicitação">
+
+
+											</c:when>
+											<c:otherwise>
+												<input type="submit" class="btn btn-primary"
+													value="Buscar servidores de ${ permutas[i.index].praca.nomePraca} que queiram vir para ${pracaAtual} filtrados pela sua solicitação">
+
+											</c:otherwise>
+										</c:choose>
+
+
 									</div>
 								</div>
 							</form>

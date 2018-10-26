@@ -21,7 +21,8 @@ public class PessoaDao {
 	Session session;
 	
 	public PessoaDao() {
-		initDao();
+		//TODO
+		//initDao();
 	}
 	
 	public void initDao() {

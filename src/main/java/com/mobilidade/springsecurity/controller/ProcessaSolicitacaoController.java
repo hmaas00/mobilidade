@@ -129,6 +129,7 @@ public class ProcessaSolicitacaoController {
 			}
 			// montar solicitação e salvar			
 			permuta2 = new SolicitacaoPermuta(p, praca2, unidade2, cadeiaValorSubgrupo2);
+			//TODO
 			permutaDao.save(permuta2);
 			arraySolicitacao.add(permuta2);
 			solicitou2 = true;
@@ -154,8 +155,24 @@ public class ProcessaSolicitacaoController {
 		}
 
 		System.out.println("controller processaSolicitacao: quantidade de solicitações - " + quantidadeSolicitacoes);
+		
+		// avaliar se ator possui ao menos uma solicitação com unidade ou processo preenchidos
+		// para apresentar o botao de busca circular
+		
+		boolean permitirBuscaCircular = false;
+		
+		p = pesDao.findByLoginName(ln);
+				
+		for(SolicitacaoPermuta s : p.getListSolicitacaoPermuta()) {
+			if(s.getUnidade() != null || s.getCadeiaValorSubgrupo() != null) {
+				permitirBuscaCircular = true;
+			}
+		}
+		
+		
 
 		// Adições no model...
+		
 		model.addAttribute("processo", processoAtual.getDescricaoSubgrupo());
 		model.addAttribute("motivo", motivo);
 		model.addAttribute("quantidade", arraySolicitacao.size());
@@ -163,6 +180,7 @@ public class ProcessaSolicitacaoController {
 		System.out.println( " tttttttttttttttttttttttttttttttttttttttttttttttt"+ p.getPraca().getNomePraca());
 		model.addAttribute("pracaAtual", p.getPraca().getNomePraca());
 		model.addAttribute("pracaAtualId", p.getPraca().getIdPraca());
+		model.addAttribute( "permitirBuscaCircular", permitirBuscaCircular);
 		//System.out.println("\n\ns='': " + s.equals(""));
 
 		return "confirmacao-solicitacao";
