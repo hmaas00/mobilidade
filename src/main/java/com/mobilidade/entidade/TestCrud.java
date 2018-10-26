@@ -25,7 +25,7 @@ public class TestCrud {
 //		node.setP( pesDao.findByLoginName("harlanm"));
 //		node.setP( pesDao.findByLoginName("alexandref"));
 		
-		node.setP( pesDao.findByLoginName("harlanm"));
+		node.setP( pesDao.findByLoginName("luizk"));
 		
 		node.fillAdjLists( dfs.getListaGeral());
 		//listAdj = node.criaListaAdjacencias(dfs.getListaGeral().get(0), 

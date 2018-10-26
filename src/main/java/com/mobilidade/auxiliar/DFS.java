@@ -3,7 +3,9 @@ package com.mobilidade.auxiliar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import com.mobilidade.dao.PessoaDao;
@@ -196,9 +198,23 @@ public class DFS {
 						antecessores.pop();
 					}
 					else {
-						antecessores.push(n);
-						visitDFS(nodeAux, t, antecessores);
-						antecessores.pop();
+						// verificar se nodeAux já faz parte da pilha de antecessores
+						// para não duplicar elementos
+						
+						boolean repetido = false;
+						Set<NodeCircular> set = new HashSet(); // conjunto auxiliar: verifica se há repetidos
+						set.add(nodeAux);
+						for(NodeCircular part : antecessores) {
+							if( set.add(part) == false) {
+								repetido = true;
+							}
+						}
+						if (   ! repetido  ) {
+						
+							antecessores.push(n);
+							visitDFS(nodeAux, t, antecessores);
+							antecessores.pop();
+						}
 					}
 				}
 			}
