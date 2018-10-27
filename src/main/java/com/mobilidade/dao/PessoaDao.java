@@ -1,5 +1,6 @@
 package com.mobilidade.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -159,6 +160,65 @@ public class PessoaDao {
 			}
 			session.getTransaction().commit();
 			return listPessoa;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+	}
+	
+	
+	
+	public List motivosUnidade() {
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			//###########Localiza user na tabela users pelo loginName##############
+			List listMotivosUnidade = session.createQuery(
+					"select p.componenteAdministrativo.unidade.nomeUnidade , p.motivoPrincipal, count(p.motivoPrincipal), "
+					+ " (count(p.motivoPrincipal) * 1.0/(select count(x) from Pessoa x)) "
+					+ "from Pessoa p "
+					+ "inner join p.componenteAdministrativo c "
+					+ "inner join c.unidade u group by "
+					+ "p.componenteAdministrativo.unidade.nomeUnidade , p.motivoPrincipal").getResultList();
+			
+			
+			
+			session.getTransaction().commit();
+			return listMotivosUnidade;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			session.close();
+			fac.close();
+			
+		}
+	}
+	
+	
+	public List motivosQuantidade() {
+		try {
+			initDao();
+			session.beginTransaction();
+			
+			//###########Localiza user na tabela users pelo loginName##############
+			List motivos = session.createQuery(
+					"select p.motivoPrincipal, count(p.motivoPrincipal), (count(p.motivoPrincipal) * 1.0/(select count(p.motivoPrincipal) from Pessoa p)) "
+					+ "from Pessoa p group by p.motivoPrincipal order by 2 desc").getResultList();
+			
+			
+			
+			session.getTransaction().commit();
+			return motivos;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

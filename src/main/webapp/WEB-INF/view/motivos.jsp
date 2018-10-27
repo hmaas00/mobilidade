@@ -1,6 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +24,7 @@
 				<a class="navbar-brand" href="#">Mobilidade de RH</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a
+				<li ><a
 					href="${pageContext.request.contextPath}/">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Mobilidade<span class="caret"></span></a>
@@ -61,22 +63,62 @@
 
 	<div class="container">
 		<div class="jumbotron">
-			<h2 class="text-center">Bem vindo ao Sistema de RH</h2>
+			<h2 class="text-center">Motivos por Unidade</h2>
 			<br>
-			<p class="text-center">
-				Escolha com qual modalidade você deseja interagir: a <strong>Mobilidade</strong>
-				é o processo em que o candidado escolhe vagas disponibilizadas durante a rodada vigente na fase de inscrições
-				enquanto a <strong>Permuta</strong> está sempre disponível
-				para participação.
-			</p>
 		</div>
-		<!-- Add a logout button -->
-		<!-- logout antigo
-      	<form:form action="${pageContext.request.contextPath}/logout" 
-			   method="POST">
-		<button type="submit" class="btn btn-default btn-xs">Logout</button>
-	</form:form>
-       -->
+		
+		
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									
+									<th class="text-center">Motivo</th>
+									<th class="text-center">Quantidade</th>
+									<th class="text-center">Percentual do Total</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach items="${motivosQuantidade}" var="linha" varStatus="j">
+									<tr>
+										<td class="text-center">${linha[0]}</td>
+										<td class="text-center">${linha[1]}</td>
+										<td class="text-center"><fmt:formatNumber value = "${linha[2]}" type = "percent"/></td>
+										
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+						
+						<hr>
+	
+
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th class="text-center">Unidade</th>
+									<th class="text-center">Motivo</th>
+									<th class="text-center">Quantidade</th>
+									<th class="text-center">Percentual do Total</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach items="${motivosUnidade}" var="linha" varStatus="j">
+									<tr>
+										<td class="text-center">${linha[0]}</td>
+										<td class="text-center">${linha[1]}</td>
+										<td class="text-center">${linha[2]}</td>
+										<td class="text-center"><fmt:formatNumber value = "${linha[3]}" type = "percent"/></td>
+										
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+		
+
 
 	</div>
 

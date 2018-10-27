@@ -245,5 +245,21 @@ public class BuscadorController {
 
 		return "solicitantes-de-uma-praca-relevancia";
 	}
+	
+	@GetMapping("/depes/motivos")
+	public String showMotivos(HttpServletRequest request, Principal principal, Model model) {
+		
+		PessoaDao pesDao = new PessoaDao();
+		
+		List motivosUnidade = pesDao.motivosUnidade();
+		
+		List motivosQuantidade = pesDao.motivosQuantidade();
+		
+		model.addAttribute("motivosQuantidade", motivosQuantidade);
+		
+		model.addAttribute("motivosUnidade", motivosUnidade);
+		
+		return "motivos";
+	}
 
 }

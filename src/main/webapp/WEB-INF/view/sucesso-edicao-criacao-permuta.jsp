@@ -45,6 +45,7 @@
 							href="${pageContext.request.contextPath}/opcoes-busca">Opções de busca de possibilidades</a></li>
 						<security:authorize access="hasRole('DEPES')">
 							<li><a href="#">Gerenciamento da permuta</a></li>
+							<li><a href="${pageContext.request.contextPath}/depes/motivos">Motivos das Solicitações</a></li>
 						</security:authorize>
 					</ul></li>
 			</ul>

@@ -3,6 +3,8 @@ package com.mobilidade.auxiliar;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mobilidade.entidade.Pessoa;
+
 // classe que guarda os motivos para buscar outros postos de trabalho
 public class Motivo {
 	
@@ -32,5 +34,6 @@ public class Motivo {
 	public void setListaMotivos(List<String> listaMotivos) {
 		this.listaMotivos = listaMotivos;
 	}
+	
 	
 }

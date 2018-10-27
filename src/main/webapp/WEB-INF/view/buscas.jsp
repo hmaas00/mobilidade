@@ -45,6 +45,7 @@
 							href="${pageContext.request.contextPath}/opcoes-busca">Opções de busca de possibilidades</a></li>	
 						<security:authorize access="hasRole('DEPES')">
 							<li><a href="#">Gerenciamento da permuta</a></li>
+							<li><a href="${pageContext.request.contextPath}/depes/motivos">Motivos das Solicitações</a></li>
 						</security:authorize>
 					</ul></li>
 			</ul>
@@ -109,8 +110,7 @@
 						<form class="form-horizontal"
 							action="${pageContext.request.contextPath}/processaDFS">
 							<div class="form-group">
-								<input type="hidden" id="idPessoa" name="idPessoa"
-									value="${pracaAtualId}">
+								
 								<div class="text-center">
 									<input type="submit" class="btn btn-success"
 										value="Buscar circular de relações">
@@ -273,8 +273,7 @@
 						<form class="form-horizontal"
 							action="${pageContext.request.contextPath}/processaDFS">
 							<div class="form-group">
-								<input type="hidden" id="idPessoa" name="idPessoa"
-									value="${pracaAtualId}">
+								
 								<div class="text-center">
 									<input type="submit" class="btn btn-success"
 										value="Buscar circular de relações">
