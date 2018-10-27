@@ -254,6 +254,53 @@ public class PessoaDao {
 			
 		}	
 	}
+	
+	
+	// retorna null se não encontrar
+		public Pessoa findByLoginNameEager(String loginName) {
+			// TODO Auto-generated method stub
+			
+			//UserDetails userDetails =
+				//	 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			//System.out.println(userDetails);
+			
+			System.out.println("pessoa dao findByLoginName: " + loginName);
+			
+			
+			
+			try {
+				initDao();
+				session.beginTransaction();
+				
+				
+				//###########Localiza user na tabela users pelo loginName##############
+				User u = (User)session.createQuery("from User u where u.userName = '"+ loginName +"'").uniqueResult();
+				//localiza pessoa associada ao user
+				Pessoa pessoaResult = u.getPessoa();
+				
+				// eager
+				pessoaResult.getComponenteAdministrativo().getUnidade();
+				pessoaResult.getPraca();
+				for ( SolicitacaoPermuta p : pessoaResult.getListSolicitacaoPermuta()) {
+					p.getCadeiaValorSubgrupo().getDescricaoSubgrupo();
+					p.getUnidade();
+					p.getPraca();
+				}
+	
+				session.getTransaction().commit();
+				return pessoaResult;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			finally {
+				session.close();
+				fac.close();
+				
+			}	
+		}
+
 
 	//select s from SolicitacaoPermuta s inner join s.pessoa p where p.idPessoa =
 	

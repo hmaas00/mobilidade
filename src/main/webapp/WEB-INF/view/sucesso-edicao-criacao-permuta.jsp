@@ -42,7 +42,7 @@
 							href="${pageContext.request.contextPath}/solicitar-permuta">Solicitação
 								de permuta</a></li>
 								<li><a
-							href="${pageContext.request.contextPath}/opcoes-busca">Opções de busca de possibilidades</a></li>	
+							href="${pageContext.request.contextPath}/opcoes-busca">Opções de busca de possibilidades</a></li>
 						<security:authorize access="hasRole('DEPES')">
 							<li><a href="#">Gerenciamento da permuta</a></li>
 						</security:authorize>
@@ -59,75 +59,33 @@
 
 	<div class="container">
 		<div class="jumbotron">
-			<p class="text-center">Detalhes do solicitante:</p>
+
+			<!-- Nenhuma solicitação... -->
+			<c:choose>
+
+				<c:when test="${quantidade == 0}">
+					<p class="text-center">Você não cadastrou nenhuma solicitação
+						de permuta.</p>
+					<p class="text-center">
+						A qualquer momento você pode castrar suas solicitações nessa <a
+							href="${pageContext.request.contextPath}/solicitar-permuta">página.</a>
+					</li>
+					</p>
+
+				</c:when>
+
+
+				<c:otherwise>
+					<p class="text-center">Seu conjunto de solicitações foi salvo!</p>
+					<p class="text-center">
+						Confira as possibilidades de permuta na opção "<a
+							href="${pageContext.request.contextPath}/opcoes-busca">Opções de busca de possibilidades</a>".
+					</p>
+
+				</c:otherwise>
+			</c:choose>
+
 		</div>
-		<table class="table table-condensed">
-			<thead>
-
-			</thead>
-			<tbody>
-				<tr>
-					<td>Nome:</td>
-					<td>${pessoa.nomePessoa}</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Matrícula:</td>
-					<td>${pessoa.matricula }</td>
-				</tr>
-				<tr>
-					<td>Cargo:</td>
-					<td>${pessoa.cargo }</td>
-				</tr>
-				<tr>
-					<td>Processo de trabalho na cadeia de valor:</td>
-					<td>${pessoa.cadeiaValorSubgrupo.descricaoSubgrupo }</td>
-				</tr>
-				<tr>
-					<td>Praça:</td>
-					<td>${pessoa.praca.nomePraca }</td>
-				</tr>
-				<tr>
-					<td>Componente Administrativo:</td>
-					<td>${pessoa.componenteAdministrativo.nomeComponente }</td>
-				</tr>
-				<tr>
-					<td>Unidade:</td>
-					<td>${pessoa.componenteAdministrativo.unidade.nomeUnidade }</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<hr>
-		<h3 class="text-center">Solicitações:</h3>
-		<br>
-
-		<table class="table table-condensed">
-			<thead>
-
-				<th></th>
-				<th>Praça desejada</th>
-				<th>Unidade desejada</th>
-				<th>Processo de trabalho desejado</th>
-
-			</thead>
-			<tbody>
-				<c:forEach items="${permutas}" var="per" varStatus="i">
-					<tr>
-						<td>Solicitação ${i.index + 1 }:</td>
-
-						<td>${per.praca.nomePraca}</td>
-						<td>${per.unidade.nomeUnidade}</td>
-						<td>${per.cadeiaValorSubgrupo.descricaoSubgrupo}</td>
-					</tr>
-				</c:forEach>
-
-			</tbody>
-		</table>
-		<br> <br>
-		<hr>
-
-
 	</div>
 </body>
 </html>

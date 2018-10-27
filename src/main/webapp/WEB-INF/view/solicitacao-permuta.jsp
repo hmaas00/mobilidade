@@ -142,6 +142,8 @@
 						<li><a
 							href="${pageContext.request.contextPath}/solicitar-permuta">Solicitação
 								de permuta</a></li>
+								<li><a
+							href="${pageContext.request.contextPath}/opcoes-busca">Opções de busca de possibilidades</a></li>	
 						<security:authorize access="hasRole('DEPES')">
 							<li><a href="#">Gerenciamento da permuta</a></li>
 						</security:authorize>

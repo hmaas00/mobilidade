@@ -183,7 +183,8 @@ public class ProcessaSolicitacaoController {
 		model.addAttribute( "permitirBuscaCircular", permitirBuscaCircular);
 		//System.out.println("\n\ns='': " + s.equals(""));
 
-		return "confirmacao-solicitacao";
+		//return "confirmacao-solicitacao";
+		return "sucesso-edicao-criacao-permuta";
 	}
 
 }

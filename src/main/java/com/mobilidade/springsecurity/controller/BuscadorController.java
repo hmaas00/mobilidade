@@ -17,7 +17,7 @@ import com.mobilidade.dao.PessoaDao;
 import com.mobilidade.entidade.Pessoa;
 
 @Controller
-public class SolicitantesDeUmaPracaController {
+public class BuscadorController {
 
 
 
