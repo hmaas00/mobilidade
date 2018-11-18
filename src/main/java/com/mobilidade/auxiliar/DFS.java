@@ -74,6 +74,14 @@ public class DFS {
 		 
 	}
 	
+	// reset profundidade lista geral
+	public void resetProfundidade() {
+		for(NodeCircular n : listaGeral) {
+			n.setProfundidade(this.TOP_NUMBER);
+			
+		}
+	}
+	
 	public NodeCircular getNodeById(int id) {
 		for(NodeCircular n : listaGeral) {
 			if(n.getP().getIdPessoa() == id) {
@@ -112,8 +120,8 @@ public class DFS {
 		// busca na lista geral o no do ator pelo seu ID
 		nodeAtor = getNodeById(ator.getIdPessoa());
 		// seta profundidade inicial '0'
-		int t = 0;
-		nodeAtor.setProfundidade(t);
+		//int t = 0;
+		//nodeAtor.setProfundidade(t);
 		// seta relacao que esta sendo construida ao longo da busca
 		Stack stack = new Stack<NodeCircular>();
 		//List r = new ArrayList(10);
@@ -136,7 +144,7 @@ public class DFS {
 				
 				// condições para visitar o node
 				
-				// a profundidade do no em analise deve ser maior que o timer,
+				// a profundidade do no em analise deve ser >= ao timer,
 				// pois, se for menor e nunca tiver chegado no ator, com uma profundidade maior
 				// isso tambem nao vai acontecer;
 				// a nao ser que esse no chegue no ator, caso em que temos que avaliar
@@ -146,6 +154,13 @@ public class DFS {
 				//
 //				r.clear();
 //				r.add(nodeAtor);
+				//teste
+				// seta profundidade inicial '0'
+				int t = 0;
+				nodeAtor.setProfundidade(t);
+				this.resetProfundidade();
+				//fim teste
+				
 				stack.push(nodeAtor);
 				visitDFS(n, t, stack);
 				stack.pop();
@@ -157,11 +172,11 @@ public class DFS {
 		
 		t++; // incrementa o timer que controla a profundidade atual
 		// verificar se vale a pena avaliar este no
-		// sua profundidade deve ser maior que o timer, se ele nunca tiver participado de uma relacao de sucesso
+		// sua profundidade deve >= ao timer, se ele nunca tiver participado de uma relacao de sucesso
 		// caso já tenha tido sucesso: a soma de sua profundidade com os passos necessários para chegar ao final
 		// deve ser menor ou igual a profundidade maxima avaliada
 		// o timer deve ser menor que a profundidade maxima avaliada
-		if( (n.getProfundidade() > t || (t + n.getChegaEm() <= this.MAX_PROFUND ) ) && t < this.MAX_PROFUND) {
+		if( (n.getProfundidade() >= t || (t + n.getChegaEm() <= this.MAX_PROFUND ) ) && t < this.MAX_PROFUND) {
 			n.setProfundidade(t);
 //			Collections.copy(n.getRelacao(), antecessores);
 //			ArrayList auxRel = new ArrayList<NodeCircular>(100);
@@ -169,7 +184,9 @@ public class DFS {
 //			n.setRelacao(auxRel);
 			//n.setRelacao(antecessores); // atualiza relacao de antecessores deste no
 //			antecessores.add(n); // adiciona este no na relacao, pois ele e antecessor do proximo!
-			n.fillAdjLists(listaGeral); // cria a(s) lista(s) de adjacencias
+			if(n.getListOfListAdj() == null) {
+				n.fillAdjLists(listaGeral); // cria a(s) lista(s) de adjacencias
+			}
 			for( int i = 0 ; i < n.getListOfListAdj().size(); i++) {
 				ArrayList  auxList =  (ArrayList)n.getListOfListAdj().get(i);
 				// para cada no na lista de adjacencia...
